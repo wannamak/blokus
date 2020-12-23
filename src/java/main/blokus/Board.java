@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.TreeSet;
 import java.util.logging.Logger;
 
 public class Board implements Comparable<Board> {
@@ -20,41 +21,34 @@ public class Board implements Comparable<Board> {
 
   private Logger logger = Logger.getLogger(Board.class.getName());
 
-  private final Map<Piece, List<YX>> playLog;
   private final Set<YX> receptors;
-  private final int[][] board;
+  private final char[][] board;
 
   public Board() {
-    this.receptors = new HashSet<>();
+    this.receptors = new TreeSet<>();
     this.receptors.add(new YX(0, 0));
-    this.playLog = new LinkedHashMap<>();
-    this.board = new int[40][40];
+    this.board = new char[40][40];
   }
 
   // copy constructor
-  private Board(Set<YX> receptors, int[][] board, Map<Piece, List<YX>> playLog) {
+  private Board(Set<YX> receptors, char[][] board) {
     this.receptors = receptors;
     this.board = board;
-    this.playLog = playLog;
   }
 
   public Board copy() {
-    int[][] newBoard = new int[board.length][];
+    char[][] newBoard = new char[board.length][];
     for(int i = 0; i < board.length; i++) {
-      int[] row = board[i];
+      char[] row = board[i];
       int rowLength = row.length;
-      newBoard[i] = new int[rowLength];
+      newBoard[i] = new char[rowLength];
       System.arraycopy(row, 0, newBoard[i], 0, rowLength);
     }
-    Map<Piece, List<YX>> newPlayLog = new LinkedHashMap<>();
-    for (Piece piece : playLog.keySet()) {
-      newPlayLog.put(piece, new ArrayList<>(playLog.get(piece)));
-    }
-    return new Board(new HashSet<>(receptors), newBoard, newPlayLog);
+    return new Board(new HashSet<>(receptors), newBoard);
   }
 
-  private int[][] getBoardMirror() {
-    int[][] newBoard = new int[board.length][board[0].length];
+  private char[][] getBoardMirror() {
+    char[][] newBoard = new char[board.length][board[0].length];
     for (int y = 0; y < board.length; y++) {
       for (int x = 0; x < board[0].length; x++) {
         newBoard[x][y] = board[y][x];
@@ -70,14 +64,7 @@ public class Board implements Comparable<Board> {
       newReceptors.add(new YX(receptor.x, receptor.y));
     }
     Map<Piece, List<YX>> newPlayLog = new TreeMap<>();
-    for (Map.Entry<Piece, List<YX>> entry : playLog.entrySet()) {
-      newPlayLog.put(entry.getKey(), new ArrayList<>(entry.getValue()));
-    }
-    return new Board(newReceptors, getBoardMirror(), newPlayLog);
-  }
-
-  public Set<Piece> getPiecesPlayedInOrder() {
-    return playLog.keySet();
+    return new Board(newReceptors, getBoardMirror());
   }
 
   public Set<YX> getReceptors() {
@@ -92,14 +79,6 @@ public class Board implements Comparable<Board> {
   }
 
   public void playPiece(Piece piece, YX boardReceptor, YX pieceCell) {
-    playPieceInternal(piece, boardReceptor, pieceCell);
-    List<YX> log = new ArrayList<>();
-    log.add(boardReceptor);
-    log.add(pieceCell);
-    playLog.put(piece, log);
-  }
-
-  private void playPieceInternal(Piece piece, YX boardReceptor, YX pieceCell) {
     int originX = boardReceptor.x - pieceCell.x;
     int originY = boardReceptor.y - pieceCell.y;
     Square[][] squares = piece.getSquares();
@@ -188,10 +167,9 @@ public class Board implements Comparable<Board> {
     }
 
     boolean isFirstMove = boardReceptor.equals(new YX(0, 0));
-    boolean result = isFirstMove
+    return isFirstMove
         ? !matedBoardReceptors.isEmpty()
         : !matedPieceReceptors.isEmpty();
-    return result;
   }
 
   @Override
@@ -226,36 +204,17 @@ public class Board implements Comparable<Board> {
       return true;
     }
     return Arrays.deepEquals(this.getBoardMirror(), that.board);
-    //this.receptors.equals(that.receptors)
-    //        &&
   }
-
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
 
-    for (Piece piece : playLog.keySet()) {
-      sb.append("id=")
-          .append(piece.getPieceId())
-          .append(":uniqueid=")
-          .append(piece.getUniquePieceId())
-          .append(":rot=")
-          .append(piece.getRotationId())
-          .append(":flipped=")
-          .append(Boolean.toString(piece.isFlipped()).substring(0, 1))
-          .append(":cell=")
-          .append(playLog.get(piece).get(1))
-          .append(":at=")
-          .append(playLog.get(piece).get(0))
-          .append(System.lineSeparator());
-    }
-
     int max = 18;
     for (int y = 0; y < max; y++) {
       for (int x = 0; x < max; x++) {
         if (board[y][x] == 1) {
-          sb.append("#");
+          sb.append("B");
         } else {
           sb.append(".");
 //        } else {
@@ -265,13 +224,6 @@ public class Board implements Comparable<Board> {
       sb.append(System.lineSeparator());
     }
     return sb.toString();
-  }
-
-  public int compareToPlayLoag(Board board) {
-    if (this.playLog.size() != board.playLog.size()) {
-      return Integer.compare(this.playLog.size(), board.playLog.size());
-    }
-    return compare(this.playLog, board.playLog);
   }
 
   @Override
@@ -293,33 +245,5 @@ public class Board implements Comparable<Board> {
     } else {
       return result;
     }
-  }
-
-  private int compare(Map<Piece, List<YX>> a, Map<Piece, List<YX>> b) {
-    Iterator<Map.Entry<Piece, List<YX>>> aa = a.entrySet().iterator();
-    Iterator<Map.Entry<Piece, List<YX>>> bb = b.entrySet().iterator();
-    for (int i = 0; i < a.size(); i++) {
-      Map.Entry<Piece, List<YX>> aaa = aa.next();
-      Map.Entry<Piece, List<YX>> bbb = bb.next();
-      if (!aaa.getKey().equals(bbb.getKey())) {
-        return aaa.getKey().compareTo(bbb.getKey());
-      }
-      if (!aaa.getValue().equals(bbb.getValue())) {
-        return compare(aaa.getValue(), bbb.getValue());
-      }
-    }
-    return 0;
-  }
-
-  private int compare(List<YX> a, List<YX> b) {
-    if (a.size() != b.size()) {
-      return Integer.compare(a.size(), b.size());
-    }
-    for (int j = 0; j < a.size(); j++) {
-      if (!a.get(j).equals(b.get(j))) {
-        return a.get(j).compareTo(b.get(j));
-      }
-    }
-    return 0;
   }
 }

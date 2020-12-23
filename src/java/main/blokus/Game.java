@@ -8,6 +8,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -15,10 +17,12 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 public class Game implements Comparable<Game> {
-  private Map<Color, SortedSet<Integer>> pieceIds;
-  private int numPlayers;
+  private final Map<Color, SortedSet<Integer>> pieceIds;
+  private final Map<Piece, List<YX>> playLog;
+  private final int numPlayers;
+  private final Board board;
+
   private Color currentPlayer;
-  private Board board;
 
   public Game(int numPlayers, Set<Integer> allPieceIds) {
     this.numPlayers = numPlayers;
@@ -30,6 +34,7 @@ public class Game implements Comparable<Game> {
     }
     this.currentPlayer = Color.values()[0];
     this.board = new Board();
+    this.playLog = new LinkedHashMap<>();
   }
 
   public int getNumPlayers() {
@@ -40,8 +45,10 @@ public class Game implements Comparable<Game> {
     return currentPlayer;
   }
 
-  private Game(Map<Color, SortedSet<Integer>> pieceIds, int numPlayers, Color currentPlayer, Board board) {
+  private Game(Map<Color, SortedSet<Integer>> pieceIds, Map<Piece, List<YX>> playLog,
+      int numPlayers, Color currentPlayer, Board board) {
     this.pieceIds = pieceIds;
+    this.playLog = playLog;
     this.numPlayers = numPlayers;
     this.currentPlayer = currentPlayer;
     this.board = board;
@@ -54,6 +61,10 @@ public class Game implements Comparable<Game> {
   public void playPiece(Piece piece, YX boardReceptor, YX pieceCell) {
     board.playPiece(piece, boardReceptor, pieceCell);
     removePiece(piece.getPieceId());
+    List<YX> log = new ArrayList<>();
+    log.add(boardReceptor);
+    log.add(pieceCell);
+    playLog.put(piece, log);
   }
 
   public void removePiece(int pieceId) {
@@ -62,6 +73,10 @@ public class Game implements Comparable<Game> {
 
   public SortedSet<Integer> getAvailablePieces() {
     return pieceIds.get(currentPlayer);
+  }
+
+  public Set<Piece> getPiecesPlayedInOrder() {
+    return playLog.keySet();
   }
 
   public Board getBoard() {
@@ -78,13 +93,32 @@ public class Game implements Comparable<Game> {
     for (Color color : pieceIds.keySet()) {
       newPieces.put(color, new TreeSet<>(pieceIds.get(color)));
     }
-    return new Game(newPieces, numPlayers, currentPlayer, board.copy());
+    Map<Piece, List<YX>> newPlayLog = new LinkedHashMap<>();
+    for (Piece piece : playLog.keySet()) {
+      newPlayLog.put(piece, new ArrayList<>(playLog.get(piece)));
+    }
+    return new Game(newPieces, playLog, numPlayers, currentPlayer, board.copy());
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("current=" + currentPlayer + ", piecesAvail=" + pieceIds.get(currentPlayer));
+    //sb.append("current=" + currentPlayer + ", piecesAvail=" + pieceIds.get(currentPlayer));
+    for (Piece piece : playLog.keySet()) {
+      sb.append("id=")
+          .append(piece.getPieceId())
+          .append(":uniqueid=")
+          .append(piece.getUniquePieceId())
+          .append(":rot=")
+          .append(piece.getRotationId())
+          .append(":flipped=")
+          .append(Boolean.toString(piece.isFlipped()).substring(0, 1))
+          .append(":cell=")
+          .append(playLog.get(piece).get(1))
+          .append(":at=")
+          .append(playLog.get(piece).get(0))
+          .append(System.lineSeparator());
+    }
     sb.append(board);
     return sb.toString();
   }
@@ -123,5 +157,32 @@ public class Game implements Comparable<Game> {
     return this.board.compareTo(game.board);
   }
 
+  private int comparePlayLogs(Map<Piece, List<YX>> a, Map<Piece, List<YX>> b) {
+    Iterator<Map.Entry<Piece, List<YX>>> aa = a.entrySet().iterator();
+    Iterator<Map.Entry<Piece, List<YX>>> bb = b.entrySet().iterator();
+    for (int i = 0; i < a.size(); i++) {
+      Map.Entry<Piece, List<YX>> aaa = aa.next();
+      Map.Entry<Piece, List<YX>> bbb = bb.next();
+      if (!aaa.getKey().equals(bbb.getKey())) {
+        return aaa.getKey().compareTo(bbb.getKey());
+      }
+      if (!aaa.getValue().equals(bbb.getValue())) {
+        return comparePlayLogLists(aaa.getValue(), bbb.getValue());
+      }
+    }
+    return 0;
+  }
+
+  private int comparePlayLogLists(List<YX> a, List<YX> b) {
+    if (a.size() != b.size()) {
+      return Integer.compare(a.size(), b.size());
+    }
+    for (int j = 0; j < a.size(); j++) {
+      if (!a.get(j).equals(b.get(j))) {
+        return a.get(j).compareTo(b.get(j));
+      }
+    }
+    return 0;
+  }
 
 }

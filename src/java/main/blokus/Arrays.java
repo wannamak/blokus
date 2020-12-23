@@ -31,7 +31,7 @@ public class Arrays {
     }
   }
 
-  public static int compare(int[][] a, int[][] b) {
+  public static int compare(char[][] a, char[][] b) {
     for (int y = 0; y < a.length; y++) {
       if (!java.util.Arrays.equals(a[y], b[y])) {
         return java.util.Arrays.compare(a[y], b[y]);

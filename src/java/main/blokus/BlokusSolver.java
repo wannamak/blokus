@@ -46,7 +46,7 @@ public class BlokusSolver {
     Map<Integer, Set<Integer>> firstPieceToSecondUniqueId = new LinkedHashMap<>();
     for (Game game : games) {
       logger.info("\n" + game.getBoard() + "\n");
-      List<Piece> piecesPlayed = new ArrayList<>(game.getBoard().getPiecesPlayedInOrder());
+      List<Piece> piecesPlayed = new ArrayList<>(game.getPiecesPlayedInOrder());
       int initialPieceId = piecesPlayed.get(0).getPieceId();
       if (!firstPieceToSecondUniqueId.containsKey(initialPieceId)) {
         firstPieceToSecondUniqueId.put(initialPieceId, getPopulated());
