@@ -1,0 +1,23 @@
+syntax = "proto2";
+
+package blokus;
+
+option java_package = "blokus";
+option java_outer_classname = "Proto";
+
+message States {
+  repeated State state = 1;
+}
+
+message State {
+  repeated MoveList blue = 1;
+  repeated MoveList yellow = 2;
+  repeated MoveList red = 3;
+  repeated MoveList green = 4;
+}
+
+message MoveList {
+  repeated int32 relative_receptor = 1;
+  repeated int32 unique_id = 2;
+  repeated int32 relative_cell = 3;
+}

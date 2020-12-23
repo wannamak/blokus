@@ -1,0 +1,610 @@
+INFO: Piece=0:unique id=0:rot=0:flip=false
+INFO: 
++x+
+x#x
++x+
+INFO: Piece=1:unique id=1:rot=0:flip=false
+INFO: 
++xx+
+x##x
++xx+
+INFO: Piece=1:unique id=2:rot=1:flip=false
+INFO: 
++x+
+x#x
+x#x
++x+
+INFO: Piece=2:unique id=3:rot=0:flip=false
+INFO: 
++xx+
+x##x
++x#x
+ +x+
+INFO: Piece=2:unique id=4:rot=1:flip=false
+INFO: 
+ +x+
++x#x
+x##x
++xx+
+INFO: Piece=2:unique id=5:rot=2:flip=false
+INFO: 
++x+ 
+x#x+
+x##x
++xx+
+INFO: Piece=2:unique id=6:rot=3:flip=false
+INFO: 
++xx+
+x##x
+x#x+
++x+ 
+INFO: Piece=3:unique id=7:rot=0:flip=false
+INFO: 
++xx+
+x##x
+x##x
++xx+
+INFO: Piece=4:unique id=8:rot=0:flip=false
+INFO: 
++xxx+
+x###x
++xxx+
+INFO: Piece=4:unique id=9:rot=1:flip=false
+INFO: 
++x+
+x#x
+x#x
+x#x
++x+
+INFO: Piece=5:unique id=10:rot=0:flip=false
+INFO: 
+ +x+ 
++x#x+
+x###x
++xxx+
+INFO: Piece=5:unique id=11:rot=1:flip=false
+INFO: 
++x+ 
+x#x+
+x##x
+x#x+
++x+ 
+INFO: Piece=5:unique id=12:rot=2:flip=false
+INFO: 
++xxx+
+x###x
++x#x+
+ +x+ 
+INFO: Piece=5:unique id=13:rot=3:flip=false
+INFO: 
+ +x+
++x#x
+x##x
++x#x
+ +x+
+INFO: Piece=6:unique id=14:rot=0:flip=false
+INFO: 
++xxxx+
+x####x
++xxxx+
+INFO: Piece=6:unique id=15:rot=1:flip=false
+INFO: 
++x+
+x#x
+x#x
+x#x
+x#x
++x+
+INFO: Piece=7:unique id=16:rot=0:flip=false
+INFO: 
+  +x+
++xx#x
+x###x
++xxx+
+INFO: Piece=7:unique id=17:rot=1:flip=false
+INFO: 
++x+ 
+x#x 
+x#x+
+x##x
++xx+
+INFO: Piece=7:unique id=18:rot=2:flip=false
+INFO: 
++xxx+
+x###x
+x#xx+
++x+  
+INFO: Piece=7:unique id=19:rot=3:flip=false
+INFO: 
++xx+
+x##x
++x#x
+ x#x
+ +x+
+INFO: Piece=7:unique id=20:rot=0:flip=true
+INFO: 
++xxx+
+x###x
++xx#x
+  +x+
+INFO: Piece=7:unique id=21:rot=1:flip=true
+INFO: 
+ +x+
+ x#x
++x#x
+x##x
++xx+
+INFO: Piece=7:unique id=22:rot=2:flip=true
+INFO: 
++x+  
+x#xx+
+x###x
++xxx+
+INFO: Piece=7:unique id=23:rot=3:flip=true
+INFO: 
++xx+
+x##x
+x#x+
+x#x 
++x+ 
+INFO: Piece=8:unique id=24:rot=0:flip=false
+INFO: 
+ +xx+
++x##x
+x##x+
++xx+ 
+INFO: Piece=8:unique id=25:rot=1:flip=false
+INFO: 
++x+ 
+x#x+
+x##x
++x#x
+ +x+
+INFO: Piece=8:unique id=26:rot=0:flip=true
+INFO: 
++xx+ 
+x##x+
++x##x
+ +xx+
+INFO: Piece=8:unique id=27:rot=1:flip=true
+INFO: 
+ +x+
++x#x
+x##x
+x#x+
++x+ 
+INFO: Piece=9:unique id=28:rot=0:flip=false
+INFO: 
++x+   
+x#xxx+
+x####x
++xxxx+
+INFO: Piece=9:unique id=29:rot=1:flip=false
+INFO: 
++xx+
+x##x
+x#x+
+x#x 
+x#x 
++x+ 
+INFO: Piece=9:unique id=30:rot=2:flip=false
+INFO: 
++xxxx+
+x####x
++xxx#x
+   +x+
+INFO: Piece=9:unique id=31:rot=3:flip=false
+INFO: 
+ +x+
+ x#x
+ x#x
++x#x
+x##x
++xx+
+INFO: Piece=9:unique id=32:rot=0:flip=true
+INFO: 
++xxxx+
+x####x
+x#xxx+
++x+   
+INFO: Piece=9:unique id=33:rot=1:flip=true
+INFO: 
++xx+
+x##x
++x#x
+ x#x
+ x#x
+ +x+
+INFO: Piece=9:unique id=34:rot=2:flip=true
+INFO: 
+   +x+
++xxx#x
+x####x
++xxxx+
+INFO: Piece=9:unique id=35:rot=3:flip=true
+INFO: 
++x+ 
+x#x 
+x#x 
+x#x+
+x##x
++xx+
+INFO: Piece=10:unique id=36:rot=0:flip=false
+INFO: 
+ +x+ 
+ x#x 
++x#x+
+x###x
++xxx+
+INFO: Piece=10:unique id=37:rot=1:flip=false
+INFO: 
++x+  
+x#xx+
+x###x
+x#xx+
++x+  
+INFO: Piece=10:unique id=38:rot=2:flip=false
+INFO: 
++xxx+
+x###x
++x#x+
+ x#x 
+ +x+ 
+INFO: Piece=10:unique id=39:rot=3:flip=false
+INFO: 
+  +x+
++xx#x
+x###x
++xx#x
+  +x+
+INFO: Piece=11:unique id=40:rot=0:flip=false
+INFO: 
++x+  
+x#x  
+x#xx+
+x###x
++xxx+
+INFO: Piece=11:unique id=41:rot=1:flip=false
+INFO: 
++xxx+
+x###x
+x#xx+
+x#x  
++x+  
+INFO: Piece=11:unique id=42:rot=2:flip=false
+INFO: 
++xxx+
+x###x
++xx#x
+  x#x
+  +x+
+INFO: Piece=11:unique id=43:rot=3:flip=false
+INFO: 
+  +x+
+  x#x
++xx#x
+x###x
++xxx+
+INFO: Piece=12:unique id=44:rot=0:flip=false
+INFO: 
+ +xxx+
++x###x
+x##xx+
++xx+  
+INFO: Piece=12:unique id=45:rot=1:flip=false
+INFO: 
++x+ 
+x#x+
+x##x
++x#x
+ x#x
+ +x+
+INFO: Piece=12:unique id=46:rot=2:flip=false
+INFO: 
+  +xx+
++xx##x
+x###x+
++xxx+ 
+INFO: Piece=12:unique id=47:rot=3:flip=false
+INFO: 
++x+ 
+x#x 
+x#x+
+x##x
++x#x
+ +x+
+INFO: Piece=12:unique id=48:rot=0:flip=true
+INFO: 
++xx+  
+x##xx+
++x###x
+ +xxx+
+INFO: Piece=12:unique id=49:rot=1:flip=true
+INFO: 
+ +x+
++x#x
+x##x
+x#x+
+x#x 
++x+ 
+INFO: Piece=12:unique id=50:rot=2:flip=true
+INFO: 
++xxx+ 
+x###x+
++xx##x
+  +xx+
+INFO: Piece=12:unique id=51:rot=3:flip=true
+INFO: 
+ +x+
+ x#x
++x#x
+x##x
+x#x+
++x+ 
+INFO: Piece=13:unique id=52:rot=0:flip=false
+INFO: 
+  +x+
++xx#x
+x###x
+x#xx+
++x+  
+INFO: Piece=13:unique id=53:rot=1:flip=false
+INFO: 
++xx+ 
+x##x 
++x#x+
+ x##x
+ +xx+
+INFO: Piece=13:unique id=54:rot=0:flip=true
+INFO: 
++x+  
+x#xx+
+x###x
++xx#x
+  +x+
+INFO: Piece=13:unique id=55:rot=1:flip=true
+INFO: 
+ +xx+
+ x##x
++x#x+
+x##x 
++xx+ 
+INFO: Piece=14:unique id=56:rot=0:flip=false
+INFO: 
++xxxxx+
+x#####x
++xxxxx+
+INFO: Piece=14:unique id=57:rot=1:flip=false
+INFO: 
++x+
+x#x
+x#x
+x#x
+x#x
+x#x
++x+
+INFO: Piece=15:unique id=58:rot=0:flip=false
+INFO: 
++x+ 
+x#x+
+x##x
+x##x
++xx+
+INFO: Piece=15:unique id=59:rot=1:flip=false
+INFO: 
++xxx+
+x###x
+x##x+
++xx+ 
+INFO: Piece=15:unique id=60:rot=2:flip=false
+INFO: 
++xx+
+x##x
+x##x
++x#x
+ +x+
+INFO: Piece=15:unique id=61:rot=3:flip=false
+INFO: 
+ +xx+
++x##x
+x###x
++xxx+
+INFO: Piece=15:unique id=62:rot=0:flip=true
+INFO: 
++xx+
+x##x
+x##x
+x#x+
++x+ 
+INFO: Piece=15:unique id=63:rot=1:flip=true
+INFO: 
++xxx+
+x###x
++x##x
+ +xx+
+INFO: Piece=15:unique id=64:rot=2:flip=true
+INFO: 
+ +x+
++x#x
+x##x
+x##x
++xx+
+INFO: Piece=15:unique id=65:rot=3:flip=true
+INFO: 
++xx+ 
+x##x+
+x###x
++xxx+
+INFO: Piece=16:unique id=66:rot=0:flip=false
+INFO: 
+ +xx+
++x##x
+x##x+
+x#x+ 
++x+  
+INFO: Piece=16:unique id=67:rot=1:flip=false
+INFO: 
++xx+ 
+x##x+
++x##x
+ +x#x
+  +x+
+INFO: Piece=16:unique id=68:rot=2:flip=false
+INFO: 
+  +x+
+ +x#x
++x##x
+x##x+
++xx+ 
+INFO: Piece=16:unique id=69:rot=3:flip=false
+INFO: 
++x+  
+x#x+ 
+x##x+
++x##x
+ +xx+
+INFO: Piece=17:unique id=70:rot=0:flip=false
+INFO: 
++xx+
+x##x
+x#x+
+x##x
++xx+
+INFO: Piece=17:unique id=71:rot=1:flip=false
+INFO: 
++xxx+
+x###x
+x#x#x
++x+x+
+INFO: Piece=17:unique id=72:rot=2:flip=false
+INFO: 
++xx+
+x##x
++x#x
+x##x
++xx+
+INFO: Piece=17:unique id=73:rot=3:flip=false
+INFO: 
++x+x+
+x#x#x
+x###x
++xxx+
+INFO: Piece=18:unique id=74:rot=0:flip=false
+INFO: 
+ +xx+
++x##x
+x##x+
++x#x 
+ +x+ 
+INFO: Piece=18:unique id=75:rot=1:flip=false
+INFO: 
+ +x+ 
++x#x+
+x###x
++xx#x
+  +x+
+INFO: Piece=18:unique id=76:rot=2:flip=false
+INFO: 
+ +x+ 
+ x#x+
++x##x
+x##x+
++xx+ 
+INFO: Piece=18:unique id=77:rot=3:flip=false
+INFO: 
++x+  
+x#xx+
+x###x
++x#x+
+ +x+ 
+INFO: Piece=18:unique id=78:rot=0:flip=true
+INFO: 
+ +x+ 
++x#x 
+x##x+
++x##x
+ +xx+
+INFO: Piece=18:unique id=79:rot=1:flip=true
+INFO: 
+ +x+ 
++x#x+
+x###x
+x#xx+
++x+  
+INFO: Piece=18:unique id=80:rot=2:flip=true
+INFO: 
++xx+ 
+x##x+
++x##x
+ x#x+
+ +x+ 
+INFO: Piece=18:unique id=81:rot=3:flip=true
+INFO: 
+  +x+
++xx#x
+x###x
++x#x+
+ +x+ 
+INFO: Piece=19:unique id=82:rot=0:flip=false
+INFO: 
+ +x+ 
++x#x+
+x###x
++x#x+
+ +x+ 
+INFO: Piece=20:unique id=83:rot=0:flip=false
+INFO: 
+ +x+  
++x#xx+
+x####x
++xxxx+
+INFO: Piece=20:unique id=84:rot=1:flip=false
+INFO: 
++x+ 
+x#x+
+x##x
+x#x+
+x#x 
++x+ 
+INFO: Piece=20:unique id=85:rot=2:flip=false
+INFO: 
++xxxx+
+x####x
++xx#x+
+  +x+ 
+INFO: Piece=20:unique id=86:rot=3:flip=false
+INFO: 
+ +x+
+ x#x
++x#x
+x##x
++x#x
+ +x+
+INFO: Piece=20:unique id=87:rot=0:flip=true
+INFO: 
++xxxx+
+x####x
++x#xx+
+ +x+  
+INFO: Piece=20:unique id=88:rot=1:flip=true
+INFO: 
+ +x+
++x#x
+x##x
++x#x
+ x#x
+ +x+
+INFO: Piece=20:unique id=89:rot=2:flip=true
+INFO: 
+  +x+ 
++xx#x+
+x####x
++xxxx+
+INFO: Piece=20:unique id=90:rot=3:flip=true
+INFO: 
++x+ 
+x#x 
+x#x+
+x##x
+x#x+
++x+ 
