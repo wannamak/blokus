@@ -2,6 +2,9 @@ package blokus;
 
 import java.util.Objects;
 
+/**
+ * Sorted by y then x.
+ */
 class YX implements Comparable<YX> {
   int x;
   int y;

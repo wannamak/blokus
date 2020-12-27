@@ -1,7 +1,6 @@
 package blokus;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -11,35 +10,31 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.logging.Logger;
 
-public class BlokusSolver {
-  private Logger logger = Logger.getLogger(BlokusSolver.class.getName());
+public class GameIterator {
+  private final Logger logger = Logger.getLogger(GameIterator.class.getName());
+  private final PieceLibrary library;
 
   public static void main(String[] args) throws Exception {
-    new BlokusSolver().run();
+    new GameIterator().run();
+  }
+
+  public GameIterator() {
+    this.library = new PieceLibrary();
   }
 
   public void run() throws Exception {
-    Map<Integer, Set<Piece>> pieces = new PieceLibrarian().generate();
-    iterate(pieces);
-
-
-//    Game game = new Game(4, pieces);
-//    while (!game.hasWinner()) {
-//
-//    }
+    int depthLimit = 2; // allPieces.size();
+    iterate(depthLimit);
   }
 
-  public void iterate(Map<Integer, Set<Piece>> allPieces) {
-    logger.info("Iterating with " + allPieces.size() + " initial pieces");
-
-    Game initialGame = new Game(1, allPieces.keySet());
+  public void iterate(int depthLimit) {
+    Game initialGame = new Game(1, library.getAllPieceIds());
     Set<Game> games = new HashSet<>();
     games.add(initialGame);
-    int limit = 2; // allPieces.size();
 
-    for (int i = 0; i < limit; ++i) {
+    for (int i = 0; i < depthLimit; ++i) {
       logger.info("Level=" + i + ", game set size=" + games.size());
-      games = iterateGames(games, allPieces, i);
+      games = iterateGames(games, i);
     }
 
     logger.info("Final game size=" + games.size());
@@ -49,7 +44,7 @@ public class BlokusSolver {
       List<Piece> piecesPlayed = new ArrayList<>(game.getPiecesPlayedInOrder());
       int initialPieceId = piecesPlayed.get(0).getPieceId();
       if (!firstPieceToSecondUniqueId.containsKey(initialPieceId)) {
-        firstPieceToSecondUniqueId.put(initialPieceId, getPopulated());
+        firstPieceToSecondUniqueId.put(initialPieceId, new HashSet<>(library.getAllUniquePieceIds()));
       }
       Set<Integer> uniques = firstPieceToSecondUniqueId.get(initialPieceId);
       uniques.remove(piecesPlayed.get(1).getUniquePieceId());
@@ -60,15 +55,7 @@ public class BlokusSolver {
     }
   }
 
-  private Set<Integer> getPopulated() {
-    Set<Integer> result = new LinkedHashSet<>();
-    for (int i = 0; i < 91; i++) {
-      result.add(i);
-    }
-    return result;
-  }
-
-  private Set<Game> iterateGames(Set<Game> games, Map<Integer, Set<Piece>> allPieces, int depth) {
+  private Set<Game> iterateGames(Set<Game> games, int currentDepth) {
     Set<Game> gamesWithNPieces = new LinkedHashSet<>();
 
     int attempts = 0;
@@ -76,7 +63,7 @@ public class BlokusSolver {
     for (Game game : games) {
       SortedSet<Integer> pieces = game.getAvailablePieces();
       for (int pieceId : pieces) {
-        for (Piece piece : allPieces.get(pieceId)) {
+        for (Piece piece : library.getPiecePermutations(pieceId)) {
           // For every available rotation of every piece, try to make a new game.
           for (YX boardReceptor : game.getBoard().getReceptors()) {
             for (YX pieceCell : piece.getCells()) {
@@ -98,11 +85,6 @@ public class BlokusSolver {
       gameCount++;
     }
     logger.info("------------" + attempts + " attempts yielded " + gamesWithNPieces.size() + " games");
-    if (false || depth == 4) {
-      for (Game game : gamesWithNPieces) {
-        logger.info("\n" + game.getBoard() + "\n");
-      }
-    }
     return gamesWithNPieces;
   }
 }

@@ -3,18 +3,17 @@ package blokus;
 import com.google.common.base.Preconditions;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 import static blokus.Square.ADJACENT;
 import static blokus.Square.CELL;
 import static blokus.Square.EMPTY;
 import static blokus.Square.RECEPTOR;
 
-public class PieceLibrarian {
+public class PieceLibrary {
   private static final Square[][][] PIECES = new Square[][][] {
       // 1x1
       new Square[][] {
@@ -127,6 +126,42 @@ public class PieceLibrarian {
   };
 
   private int uniquePieceId = 0;
+  private final Map<Integer, Set<Piece>> piecesByPieceId;
+  private final Map<Integer, Piece> piecesByUniqueId;
+
+  public PieceLibrary() {
+    this.piecesByPieceId = generate();
+    this.piecesByUniqueId = new HashMap<>();
+    for (int pieceId : piecesByPieceId.keySet()) {
+      for (Piece piece : piecesByPieceId.get(pieceId)) {
+        piecesByUniqueId.put(piece.getUniquePieceId(), piece);
+      }
+    }
+  }
+
+  public Set<Integer> getAllPieceIds() {
+    return piecesByPieceId.keySet();
+  }
+
+  public Set<Integer> getAllUniquePieceIds() {
+    return piecesByUniqueId.keySet();
+  }
+
+  public Set<Piece> getPiecePermutations(int pieceId) {
+    return piecesByPieceId.get(pieceId);
+  }
+
+  public Map<Integer, Set<Piece>> getAllPieces() {
+    return piecesByPieceId;
+  }
+
+  public Piece getPieceByUniqueId(int uniquePieceId) {
+    return piecesByUniqueId.get(uniquePieceId);
+  }
+
+  private Set<Piece> getPermutations(int pieceId) {
+    return piecesByPieceId.get(pieceId);
+  }
 
   private Square[][] expand(Square[][] input) {
     Square[][] result = new Square[input.length + 2][input[0].length + 2];
@@ -153,8 +188,8 @@ public class PieceLibrarian {
     return result;
   }
 
-  public Map<Integer, Set<Piece>> generate() {
-    Map<Integer, Set<Piece>> pieces = new HashMap<>();
+  private Map<Integer, Set<Piece>> generate() {
+    Map<Integer, Set<Piece>> pieces = new LinkedHashMap<>();
     for (int pieceId = 0; pieceId < PIECES.length; pieceId++) {
       Square[][] pieceDefinition = expand(PIECES[pieceId]);
       Set<Piece> permutations = new LinkedHashSet<>();

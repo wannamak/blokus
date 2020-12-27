@@ -71,13 +71,6 @@ public class Board implements Comparable<Board> {
     return receptors;
   }
 
-  public boolean canPlay(Piece piece, YX boardReceptor, YX pieceCell) {
-    if (!isLegalMove(piece, boardReceptor, pieceCell)) {
-      return false;
-    }
-    return true;
-  }
-
   public void playPiece(Piece piece, YX boardReceptor, YX pieceCell) {
     int originX = boardReceptor.x - pieceCell.x;
     int originY = boardReceptor.y - pieceCell.y;
@@ -120,7 +113,7 @@ public class Board implements Comparable<Board> {
     }
   }
 
-  private boolean isLegalMove(Piece piece, YX boardReceptor, YX pieceCell) {
+  public boolean canPlay(Piece piece, YX boardReceptor, YX pieceCell) {
     Set<YX> matedBoardReceptors = new HashSet<>();
     Set<YX> matedPieceReceptors = new HashSet<>();
     int originX = boardReceptor.x - pieceCell.x;

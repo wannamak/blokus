@@ -4,10 +4,7 @@ import com.google.common.base.Preconditions;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -17,7 +14,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 public class Game implements Comparable<Game> {
-  private final Map<Color, SortedSet<Integer>> pieceIds;
+  private final Map<Color, SortedSet<Integer>> availablePieceIds;
   private final Map<Piece, List<YX>> playLog;
   private final int numPlayers;
   private final Board board;
@@ -26,11 +23,11 @@ public class Game implements Comparable<Game> {
 
   public Game(int numPlayers, Set<Integer> allPieceIds) {
     this.numPlayers = numPlayers;
-    this.pieceIds = new HashMap<>();
+    this.availablePieceIds = new HashMap<>();
     int colorIndex = 0;
     for (int i = 0; i < numPlayers; i++) {
       SortedSet<Integer> playerPieceIds = new TreeSet<>(allPieceIds);
-      pieceIds.put(Color.values()[colorIndex++], playerPieceIds);
+      availablePieceIds.put(Color.values()[colorIndex++], playerPieceIds);
     }
     this.currentPlayer = Color.values()[0];
     this.board = new Board();
@@ -47,7 +44,7 @@ public class Game implements Comparable<Game> {
 
   private Game(Map<Color, SortedSet<Integer>> pieceIds, Map<Piece, List<YX>> playLog,
       int numPlayers, Color currentPlayer, Board board) {
-    this.pieceIds = pieceIds;
+    this.availablePieceIds = pieceIds;
     this.playLog = playLog;
     this.numPlayers = numPlayers;
     this.currentPlayer = currentPlayer;
@@ -68,11 +65,11 @@ public class Game implements Comparable<Game> {
   }
 
   public void removePiece(int pieceId) {
-    Preconditions.checkState(pieceIds.get(currentPlayer).remove(pieceId));
+    Preconditions.checkState(availablePieceIds.get(currentPlayer).remove(pieceId));
   }
 
   public SortedSet<Integer> getAvailablePieces() {
-    return pieceIds.get(currentPlayer);
+    return availablePieceIds.get(currentPlayer);
   }
 
   public Set<Piece> getPiecesPlayedInOrder() {
@@ -90,8 +87,8 @@ public class Game implements Comparable<Game> {
 
   public Game copy() {
     Map<Color, SortedSet<Integer>> newPieces = new HashMap<>();
-    for (Color color : pieceIds.keySet()) {
-      newPieces.put(color, new TreeSet<>(pieceIds.get(color)));
+    for (Color color : availablePieceIds.keySet()) {
+      newPieces.put(color, new TreeSet<>(availablePieceIds.get(color)));
     }
     Map<Piece, List<YX>> newPlayLog = new LinkedHashMap<>();
     for (Piece piece : playLog.keySet()) {
@@ -149,9 +146,9 @@ public class Game implements Comparable<Game> {
       return currentPlayer.compareTo(game.currentPlayer);
     }
     for (Color color : Color.values()) {
-      if (!this.pieceIds.get(color).equals(game.pieceIds.get(color))) {
-         return this.pieceIds.get(color).toString().compareTo(
-             game.pieceIds.get(color).toString());
+      if (!this.availablePieceIds.get(color).equals(game.availablePieceIds.get(color))) {
+         return this.availablePieceIds.get(color).toString().compareTo(
+             game.availablePieceIds.get(color).toString());
       }
     }
     return this.board.compareTo(game.board);
