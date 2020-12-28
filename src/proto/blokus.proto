@@ -5,10 +5,6 @@ package blokus;
 option java_package = "blokus";
 option java_outer_classname = "Proto";
 
-message States {
-  repeated State state = 1;
-}
-
 message State {
   repeated MoveList blue = 1;
   repeated MoveList yellow = 2;
@@ -17,7 +13,7 @@ message State {
 }
 
 message MoveList {
-  repeated int32 relative_receptor = 1;
+  repeated int32 board_receptor = 1;
   repeated int32 unique_id = 2;
-  repeated int32 relative_cell = 3;
+  repeated int32 piece_cell = 3;
 }

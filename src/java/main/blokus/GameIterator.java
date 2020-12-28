@@ -1,5 +1,16 @@
 package blokus;
 
+import blokus.codec.GameCodec;
+import com.google.common.base.Preconditions;
+
+import java.io.BufferedOutputStream;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -24,10 +35,11 @@ public class GameIterator {
 
   public void run() throws Exception {
     int depthLimit = 2; // allPieces.size();
-    iterate(depthLimit);
+    File output = new File("/tmp/depth-" + depthLimit + ".bin");
+    iterate(depthLimit, output);
   }
 
-  public void iterate(int depthLimit) {
+  public void iterate(int depthLimit, File output) throws IOException {
     Game initialGame = new Game(1, library.getAllPieceIds());
     Set<Game> games = new HashSet<>();
     games.add(initialGame);
@@ -38,10 +50,22 @@ public class GameIterator {
     }
 
     logger.info("Final game size=" + games.size());
+
+    GameCodec codec = new GameCodec();
+    try (OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(output))) {
+      for (Game game : games) {
+        Proto.State state = codec.encode(game);
+        state.writeDelimitedTo(outputStream);
+      }
+    }
+    printStats(games);
+  }
+
+  public void printStats(Set<Game> games) {
     Map<Integer, Set<Integer>> firstPieceToSecondUniqueId = new LinkedHashMap<>();
     for (Game game : games) {
       logger.info("\n" + game.getBoard() + "\n");
-      List<Piece> piecesPlayed = new ArrayList<>(game.getPiecesPlayedInOrder());
+      List<Piece> piecesPlayed = game.getPlayLog().getPiecesPlayed(Color.BLUE);
       int initialPieceId = piecesPlayed.get(0).getPieceId();
       if (!firstPieceToSecondUniqueId.containsKey(initialPieceId)) {
         firstPieceToSecondUniqueId.put(initialPieceId, new HashSet<>(library.getAllUniquePieceIds()));

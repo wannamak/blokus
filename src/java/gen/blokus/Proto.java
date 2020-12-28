@@ -8,682 +8,6 @@ public final class Proto {
   public static void registerAllExtensions(
       com.google.protobuf.ExtensionRegistry registry) {
   }
-  public interface StatesOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:blokus.States)
-      com.google.protobuf.MessageOrBuilder {
-
-    /**
-     * <code>repeated .blokus.State state = 1;</code>
-     */
-    java.util.List<blokus.Proto.State> 
-        getStateList();
-    /**
-     * <code>repeated .blokus.State state = 1;</code>
-     */
-    blokus.Proto.State getState(int index);
-    /**
-     * <code>repeated .blokus.State state = 1;</code>
-     */
-    int getStateCount();
-    /**
-     * <code>repeated .blokus.State state = 1;</code>
-     */
-    java.util.List<? extends blokus.Proto.StateOrBuilder> 
-        getStateOrBuilderList();
-    /**
-     * <code>repeated .blokus.State state = 1;</code>
-     */
-    blokus.Proto.StateOrBuilder getStateOrBuilder(
-        int index);
-  }
-  /**
-   * Protobuf type {@code blokus.States}
-   */
-  public static final class States extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:blokus.States)
-      StatesOrBuilder {
-    // Use States.newBuilder() to construct.
-    private States(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
-      super(builder);
-      this.unknownFields = builder.getUnknownFields();
-    }
-    private States(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
-
-    private static final States defaultInstance;
-    public static States getDefaultInstance() {
-      return defaultInstance;
-    }
-
-    public States getDefaultInstanceForType() {
-      return defaultInstance;
-    }
-
-    private final com.google.protobuf.UnknownFieldSet unknownFields;
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet
-        getUnknownFields() {
-      return this.unknownFields;
-    }
-    private States(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      initFields();
-      int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            default: {
-              if (!parseUnknownField(input, unknownFields,
-                                     extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-            case 10: {
-              if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
-                state_ = new java.util.ArrayList<blokus.Proto.State>();
-                mutable_bitField0_ |= 0x00000001;
-              }
-              state_.add(input.readMessage(blokus.Proto.State.PARSER, extensionRegistry));
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e.getMessage()).setUnfinishedMessage(this);
-      } finally {
-        if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
-          state_ = java.util.Collections.unmodifiableList(state_);
-        }
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
-    }
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return blokus.Proto.internal_static_blokus_States_descriptor;
-    }
-
-    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return blokus.Proto.internal_static_blokus_States_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              blokus.Proto.States.class, blokus.Proto.States.Builder.class);
-    }
-
-    public static com.google.protobuf.Parser<States> PARSER =
-        new com.google.protobuf.AbstractParser<States>() {
-      public States parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new States(input, extensionRegistry);
-      }
-    };
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<States> getParserForType() {
-      return PARSER;
-    }
-
-    public static final int STATE_FIELD_NUMBER = 1;
-    private java.util.List<blokus.Proto.State> state_;
-    /**
-     * <code>repeated .blokus.State state = 1;</code>
-     */
-    public java.util.List<blokus.Proto.State> getStateList() {
-      return state_;
-    }
-    /**
-     * <code>repeated .blokus.State state = 1;</code>
-     */
-    public java.util.List<? extends blokus.Proto.StateOrBuilder> 
-        getStateOrBuilderList() {
-      return state_;
-    }
-    /**
-     * <code>repeated .blokus.State state = 1;</code>
-     */
-    public int getStateCount() {
-      return state_.size();
-    }
-    /**
-     * <code>repeated .blokus.State state = 1;</code>
-     */
-    public blokus.Proto.State getState(int index) {
-      return state_.get(index);
-    }
-    /**
-     * <code>repeated .blokus.State state = 1;</code>
-     */
-    public blokus.Proto.StateOrBuilder getStateOrBuilder(
-        int index) {
-      return state_.get(index);
-    }
-
-    private void initFields() {
-      state_ = java.util.Collections.emptyList();
-    }
-    private byte memoizedIsInitialized = -1;
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
-    }
-
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      getSerializedSize();
-      for (int i = 0; i < state_.size(); i++) {
-        output.writeMessage(1, state_.get(i));
-      }
-      getUnknownFields().writeTo(output);
-    }
-
-    private int memoizedSerializedSize = -1;
-    public int getSerializedSize() {
-      int size = memoizedSerializedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      for (int i = 0; i < state_.size(); i++) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(1, state_.get(i));
-      }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
-      return size;
-    }
-
-    private static final long serialVersionUID = 0L;
-    @java.lang.Override
-    protected java.lang.Object writeReplace()
-        throws java.io.ObjectStreamException {
-      return super.writeReplace();
-    }
-
-    public static blokus.Proto.States parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static blokus.Proto.States parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static blokus.Proto.States parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static blokus.Proto.States parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static blokus.Proto.States parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return PARSER.parseFrom(input);
-    }
-    public static blokus.Proto.States parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
-    }
-    public static blokus.Proto.States parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input);
-    }
-    public static blokus.Proto.States parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input, extensionRegistry);
-    }
-    public static blokus.Proto.States parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return PARSER.parseFrom(input);
-    }
-    public static blokus.Proto.States parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
-    }
-
-    public static Builder newBuilder() { return Builder.create(); }
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(blokus.Proto.States prototype) {
-      return newBuilder().mergeFrom(prototype);
-    }
-    public Builder toBuilder() { return newBuilder(this); }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
-    /**
-     * Protobuf type {@code blokus.States}
-     */
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:blokus.States)
-        blokus.Proto.StatesOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return blokus.Proto.internal_static_blokus_States_descriptor;
-      }
-
-      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return blokus.Proto.internal_static_blokus_States_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                blokus.Proto.States.class, blokus.Proto.States.Builder.class);
-      }
-
-      // Construct using blokus.Proto.States.newBuilder()
-      private Builder() {
-        maybeForceBuilderInitialization();
-      }
-
-      private Builder(
-          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
-          getStateFieldBuilder();
-        }
-      }
-      private static Builder create() {
-        return new Builder();
-      }
-
-      public Builder clear() {
-        super.clear();
-        if (stateBuilder_ == null) {
-          state_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000001);
-        } else {
-          stateBuilder_.clear();
-        }
-        return this;
-      }
-
-      public Builder clone() {
-        return create().mergeFrom(buildPartial());
-      }
-
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return blokus.Proto.internal_static_blokus_States_descriptor;
-      }
-
-      public blokus.Proto.States getDefaultInstanceForType() {
-        return blokus.Proto.States.getDefaultInstance();
-      }
-
-      public blokus.Proto.States build() {
-        blokus.Proto.States result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      public blokus.Proto.States buildPartial() {
-        blokus.Proto.States result = new blokus.Proto.States(this);
-        int from_bitField0_ = bitField0_;
-        if (stateBuilder_ == null) {
-          if (((bitField0_ & 0x00000001) == 0x00000001)) {
-            state_ = java.util.Collections.unmodifiableList(state_);
-            bitField0_ = (bitField0_ & ~0x00000001);
-          }
-          result.state_ = state_;
-        } else {
-          result.state_ = stateBuilder_.build();
-        }
-        onBuilt();
-        return result;
-      }
-
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof blokus.Proto.States) {
-          return mergeFrom((blokus.Proto.States)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(blokus.Proto.States other) {
-        if (other == blokus.Proto.States.getDefaultInstance()) return this;
-        if (stateBuilder_ == null) {
-          if (!other.state_.isEmpty()) {
-            if (state_.isEmpty()) {
-              state_ = other.state_;
-              bitField0_ = (bitField0_ & ~0x00000001);
-            } else {
-              ensureStateIsMutable();
-              state_.addAll(other.state_);
-            }
-            onChanged();
-          }
-        } else {
-          if (!other.state_.isEmpty()) {
-            if (stateBuilder_.isEmpty()) {
-              stateBuilder_.dispose();
-              stateBuilder_ = null;
-              state_ = other.state_;
-              bitField0_ = (bitField0_ & ~0x00000001);
-              stateBuilder_ = 
-                com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
-                   getStateFieldBuilder() : null;
-            } else {
-              stateBuilder_.addAllMessages(other.state_);
-            }
-          }
-        }
-        this.mergeUnknownFields(other.getUnknownFields());
-        return this;
-      }
-
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        blokus.Proto.States parsedMessage = null;
-        try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (blokus.Proto.States) e.getUnfinishedMessage();
-          throw e;
-        } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
-        return this;
-      }
-      private int bitField0_;
-
-      private java.util.List<blokus.Proto.State> state_ =
-        java.util.Collections.emptyList();
-      private void ensureStateIsMutable() {
-        if (!((bitField0_ & 0x00000001) == 0x00000001)) {
-          state_ = new java.util.ArrayList<blokus.Proto.State>(state_);
-          bitField0_ |= 0x00000001;
-         }
-      }
-
-      private com.google.protobuf.RepeatedFieldBuilder<
-          blokus.Proto.State, blokus.Proto.State.Builder, blokus.Proto.StateOrBuilder> stateBuilder_;
-
-      /**
-       * <code>repeated .blokus.State state = 1;</code>
-       */
-      public java.util.List<blokus.Proto.State> getStateList() {
-        if (stateBuilder_ == null) {
-          return java.util.Collections.unmodifiableList(state_);
-        } else {
-          return stateBuilder_.getMessageList();
-        }
-      }
-      /**
-       * <code>repeated .blokus.State state = 1;</code>
-       */
-      public int getStateCount() {
-        if (stateBuilder_ == null) {
-          return state_.size();
-        } else {
-          return stateBuilder_.getCount();
-        }
-      }
-      /**
-       * <code>repeated .blokus.State state = 1;</code>
-       */
-      public blokus.Proto.State getState(int index) {
-        if (stateBuilder_ == null) {
-          return state_.get(index);
-        } else {
-          return stateBuilder_.getMessage(index);
-        }
-      }
-      /**
-       * <code>repeated .blokus.State state = 1;</code>
-       */
-      public Builder setState(
-          int index, blokus.Proto.State value) {
-        if (stateBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureStateIsMutable();
-          state_.set(index, value);
-          onChanged();
-        } else {
-          stateBuilder_.setMessage(index, value);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .blokus.State state = 1;</code>
-       */
-      public Builder setState(
-          int index, blokus.Proto.State.Builder builderForValue) {
-        if (stateBuilder_ == null) {
-          ensureStateIsMutable();
-          state_.set(index, builderForValue.build());
-          onChanged();
-        } else {
-          stateBuilder_.setMessage(index, builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .blokus.State state = 1;</code>
-       */
-      public Builder addState(blokus.Proto.State value) {
-        if (stateBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureStateIsMutable();
-          state_.add(value);
-          onChanged();
-        } else {
-          stateBuilder_.addMessage(value);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .blokus.State state = 1;</code>
-       */
-      public Builder addState(
-          int index, blokus.Proto.State value) {
-        if (stateBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureStateIsMutable();
-          state_.add(index, value);
-          onChanged();
-        } else {
-          stateBuilder_.addMessage(index, value);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .blokus.State state = 1;</code>
-       */
-      public Builder addState(
-          blokus.Proto.State.Builder builderForValue) {
-        if (stateBuilder_ == null) {
-          ensureStateIsMutable();
-          state_.add(builderForValue.build());
-          onChanged();
-        } else {
-          stateBuilder_.addMessage(builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .blokus.State state = 1;</code>
-       */
-      public Builder addState(
-          int index, blokus.Proto.State.Builder builderForValue) {
-        if (stateBuilder_ == null) {
-          ensureStateIsMutable();
-          state_.add(index, builderForValue.build());
-          onChanged();
-        } else {
-          stateBuilder_.addMessage(index, builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .blokus.State state = 1;</code>
-       */
-      public Builder addAllState(
-          java.lang.Iterable<? extends blokus.Proto.State> values) {
-        if (stateBuilder_ == null) {
-          ensureStateIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, state_);
-          onChanged();
-        } else {
-          stateBuilder_.addAllMessages(values);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .blokus.State state = 1;</code>
-       */
-      public Builder clearState() {
-        if (stateBuilder_ == null) {
-          state_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000001);
-          onChanged();
-        } else {
-          stateBuilder_.clear();
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .blokus.State state = 1;</code>
-       */
-      public Builder removeState(int index) {
-        if (stateBuilder_ == null) {
-          ensureStateIsMutable();
-          state_.remove(index);
-          onChanged();
-        } else {
-          stateBuilder_.remove(index);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .blokus.State state = 1;</code>
-       */
-      public blokus.Proto.State.Builder getStateBuilder(
-          int index) {
-        return getStateFieldBuilder().getBuilder(index);
-      }
-      /**
-       * <code>repeated .blokus.State state = 1;</code>
-       */
-      public blokus.Proto.StateOrBuilder getStateOrBuilder(
-          int index) {
-        if (stateBuilder_ == null) {
-          return state_.get(index);  } else {
-          return stateBuilder_.getMessageOrBuilder(index);
-        }
-      }
-      /**
-       * <code>repeated .blokus.State state = 1;</code>
-       */
-      public java.util.List<? extends blokus.Proto.StateOrBuilder> 
-           getStateOrBuilderList() {
-        if (stateBuilder_ != null) {
-          return stateBuilder_.getMessageOrBuilderList();
-        } else {
-          return java.util.Collections.unmodifiableList(state_);
-        }
-      }
-      /**
-       * <code>repeated .blokus.State state = 1;</code>
-       */
-      public blokus.Proto.State.Builder addStateBuilder() {
-        return getStateFieldBuilder().addBuilder(
-            blokus.Proto.State.getDefaultInstance());
-      }
-      /**
-       * <code>repeated .blokus.State state = 1;</code>
-       */
-      public blokus.Proto.State.Builder addStateBuilder(
-          int index) {
-        return getStateFieldBuilder().addBuilder(
-            index, blokus.Proto.State.getDefaultInstance());
-      }
-      /**
-       * <code>repeated .blokus.State state = 1;</code>
-       */
-      public java.util.List<blokus.Proto.State.Builder> 
-           getStateBuilderList() {
-        return getStateFieldBuilder().getBuilderList();
-      }
-      private com.google.protobuf.RepeatedFieldBuilder<
-          blokus.Proto.State, blokus.Proto.State.Builder, blokus.Proto.StateOrBuilder> 
-          getStateFieldBuilder() {
-        if (stateBuilder_ == null) {
-          stateBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
-              blokus.Proto.State, blokus.Proto.State.Builder, blokus.Proto.StateOrBuilder>(
-                  state_,
-                  ((bitField0_ & 0x00000001) == 0x00000001),
-                  getParentForChildren(),
-                  isClean());
-          state_ = null;
-        }
-        return stateBuilder_;
-      }
-
-      // @@protoc_insertion_point(builder_scope:blokus.States)
-    }
-
-    static {
-      defaultInstance = new States(true);
-      defaultInstance.initFields();
-    }
-
-    // @@protoc_insertion_point(class_scope:blokus.States)
-  }
-
   public interface StateOrBuilder extends
       // @@protoc_insertion_point(interface_extends:blokus.State)
       com.google.protobuf.MessageOrBuilder {
@@ -2445,17 +1769,17 @@ public final class Proto {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>repeated int32 relative_receptor = 1;</code>
+     * <code>repeated int32 board_receptor = 1;</code>
      */
-    java.util.List<java.lang.Integer> getRelativeReceptorList();
+    java.util.List<java.lang.Integer> getBoardReceptorList();
     /**
-     * <code>repeated int32 relative_receptor = 1;</code>
+     * <code>repeated int32 board_receptor = 1;</code>
      */
-    int getRelativeReceptorCount();
+    int getBoardReceptorCount();
     /**
-     * <code>repeated int32 relative_receptor = 1;</code>
+     * <code>repeated int32 board_receptor = 1;</code>
      */
-    int getRelativeReceptor(int index);
+    int getBoardReceptor(int index);
 
     /**
      * <code>repeated int32 unique_id = 2;</code>
@@ -2471,17 +1795,17 @@ public final class Proto {
     int getUniqueId(int index);
 
     /**
-     * <code>repeated int32 relative_cell = 3;</code>
+     * <code>repeated int32 piece_cell = 3;</code>
      */
-    java.util.List<java.lang.Integer> getRelativeCellList();
+    java.util.List<java.lang.Integer> getPieceCellList();
     /**
-     * <code>repeated int32 relative_cell = 3;</code>
+     * <code>repeated int32 piece_cell = 3;</code>
      */
-    int getRelativeCellCount();
+    int getPieceCellCount();
     /**
-     * <code>repeated int32 relative_cell = 3;</code>
+     * <code>repeated int32 piece_cell = 3;</code>
      */
-    int getRelativeCell(int index);
+    int getPieceCell(int index);
   }
   /**
    * Protobuf type {@code blokus.MoveList}
@@ -2537,21 +1861,21 @@ public final class Proto {
             }
             case 8: {
               if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
-                relativeReceptor_ = new java.util.ArrayList<java.lang.Integer>();
+                boardReceptor_ = new java.util.ArrayList<java.lang.Integer>();
                 mutable_bitField0_ |= 0x00000001;
               }
-              relativeReceptor_.add(input.readInt32());
+              boardReceptor_.add(input.readInt32());
               break;
             }
             case 10: {
               int length = input.readRawVarint32();
               int limit = input.pushLimit(length);
               if (!((mutable_bitField0_ & 0x00000001) == 0x00000001) && input.getBytesUntilLimit() > 0) {
-                relativeReceptor_ = new java.util.ArrayList<java.lang.Integer>();
+                boardReceptor_ = new java.util.ArrayList<java.lang.Integer>();
                 mutable_bitField0_ |= 0x00000001;
               }
               while (input.getBytesUntilLimit() > 0) {
-                relativeReceptor_.add(input.readInt32());
+                boardReceptor_.add(input.readInt32());
               }
               input.popLimit(limit);
               break;
@@ -2579,21 +1903,21 @@ public final class Proto {
             }
             case 24: {
               if (!((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
-                relativeCell_ = new java.util.ArrayList<java.lang.Integer>();
+                pieceCell_ = new java.util.ArrayList<java.lang.Integer>();
                 mutable_bitField0_ |= 0x00000004;
               }
-              relativeCell_.add(input.readInt32());
+              pieceCell_.add(input.readInt32());
               break;
             }
             case 26: {
               int length = input.readRawVarint32();
               int limit = input.pushLimit(length);
               if (!((mutable_bitField0_ & 0x00000004) == 0x00000004) && input.getBytesUntilLimit() > 0) {
-                relativeCell_ = new java.util.ArrayList<java.lang.Integer>();
+                pieceCell_ = new java.util.ArrayList<java.lang.Integer>();
                 mutable_bitField0_ |= 0x00000004;
               }
               while (input.getBytesUntilLimit() > 0) {
-                relativeCell_.add(input.readInt32());
+                pieceCell_.add(input.readInt32());
               }
               input.popLimit(limit);
               break;
@@ -2607,13 +1931,13 @@ public final class Proto {
             e.getMessage()).setUnfinishedMessage(this);
       } finally {
         if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
-          relativeReceptor_ = java.util.Collections.unmodifiableList(relativeReceptor_);
+          boardReceptor_ = java.util.Collections.unmodifiableList(boardReceptor_);
         }
         if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
           uniqueId_ = java.util.Collections.unmodifiableList(uniqueId_);
         }
         if (((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
-          relativeCell_ = java.util.Collections.unmodifiableList(relativeCell_);
+          pieceCell_ = java.util.Collections.unmodifiableList(pieceCell_);
         }
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -2646,26 +1970,26 @@ public final class Proto {
       return PARSER;
     }
 
-    public static final int RELATIVE_RECEPTOR_FIELD_NUMBER = 1;
-    private java.util.List<java.lang.Integer> relativeReceptor_;
+    public static final int BOARD_RECEPTOR_FIELD_NUMBER = 1;
+    private java.util.List<java.lang.Integer> boardReceptor_;
     /**
-     * <code>repeated int32 relative_receptor = 1;</code>
+     * <code>repeated int32 board_receptor = 1;</code>
      */
     public java.util.List<java.lang.Integer>
-        getRelativeReceptorList() {
-      return relativeReceptor_;
+        getBoardReceptorList() {
+      return boardReceptor_;
     }
     /**
-     * <code>repeated int32 relative_receptor = 1;</code>
+     * <code>repeated int32 board_receptor = 1;</code>
      */
-    public int getRelativeReceptorCount() {
-      return relativeReceptor_.size();
+    public int getBoardReceptorCount() {
+      return boardReceptor_.size();
     }
     /**
-     * <code>repeated int32 relative_receptor = 1;</code>
+     * <code>repeated int32 board_receptor = 1;</code>
      */
-    public int getRelativeReceptor(int index) {
-      return relativeReceptor_.get(index);
+    public int getBoardReceptor(int index) {
+      return boardReceptor_.get(index);
     }
 
     public static final int UNIQUE_ID_FIELD_NUMBER = 2;
@@ -2690,32 +2014,32 @@ public final class Proto {
       return uniqueId_.get(index);
     }
 
-    public static final int RELATIVE_CELL_FIELD_NUMBER = 3;
-    private java.util.List<java.lang.Integer> relativeCell_;
+    public static final int PIECE_CELL_FIELD_NUMBER = 3;
+    private java.util.List<java.lang.Integer> pieceCell_;
     /**
-     * <code>repeated int32 relative_cell = 3;</code>
+     * <code>repeated int32 piece_cell = 3;</code>
      */
     public java.util.List<java.lang.Integer>
-        getRelativeCellList() {
-      return relativeCell_;
+        getPieceCellList() {
+      return pieceCell_;
     }
     /**
-     * <code>repeated int32 relative_cell = 3;</code>
+     * <code>repeated int32 piece_cell = 3;</code>
      */
-    public int getRelativeCellCount() {
-      return relativeCell_.size();
+    public int getPieceCellCount() {
+      return pieceCell_.size();
     }
     /**
-     * <code>repeated int32 relative_cell = 3;</code>
+     * <code>repeated int32 piece_cell = 3;</code>
      */
-    public int getRelativeCell(int index) {
-      return relativeCell_.get(index);
+    public int getPieceCell(int index) {
+      return pieceCell_.get(index);
     }
 
     private void initFields() {
-      relativeReceptor_ = java.util.Collections.emptyList();
+      boardReceptor_ = java.util.Collections.emptyList();
       uniqueId_ = java.util.Collections.emptyList();
-      relativeCell_ = java.util.Collections.emptyList();
+      pieceCell_ = java.util.Collections.emptyList();
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -2730,14 +2054,14 @@ public final class Proto {
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       getSerializedSize();
-      for (int i = 0; i < relativeReceptor_.size(); i++) {
-        output.writeInt32(1, relativeReceptor_.get(i));
+      for (int i = 0; i < boardReceptor_.size(); i++) {
+        output.writeInt32(1, boardReceptor_.get(i));
       }
       for (int i = 0; i < uniqueId_.size(); i++) {
         output.writeInt32(2, uniqueId_.get(i));
       }
-      for (int i = 0; i < relativeCell_.size(); i++) {
-        output.writeInt32(3, relativeCell_.get(i));
+      for (int i = 0; i < pieceCell_.size(); i++) {
+        output.writeInt32(3, pieceCell_.get(i));
       }
       getUnknownFields().writeTo(output);
     }
@@ -2750,12 +2074,12 @@ public final class Proto {
       size = 0;
       {
         int dataSize = 0;
-        for (int i = 0; i < relativeReceptor_.size(); i++) {
+        for (int i = 0; i < boardReceptor_.size(); i++) {
           dataSize += com.google.protobuf.CodedOutputStream
-            .computeInt32SizeNoTag(relativeReceptor_.get(i));
+            .computeInt32SizeNoTag(boardReceptor_.get(i));
         }
         size += dataSize;
-        size += 1 * getRelativeReceptorList().size();
+        size += 1 * getBoardReceptorList().size();
       }
       {
         int dataSize = 0;
@@ -2768,12 +2092,12 @@ public final class Proto {
       }
       {
         int dataSize = 0;
-        for (int i = 0; i < relativeCell_.size(); i++) {
+        for (int i = 0; i < pieceCell_.size(); i++) {
           dataSize += com.google.protobuf.CodedOutputStream
-            .computeInt32SizeNoTag(relativeCell_.get(i));
+            .computeInt32SizeNoTag(pieceCell_.get(i));
         }
         size += dataSize;
-        size += 1 * getRelativeCellList().size();
+        size += 1 * getPieceCellList().size();
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -2892,11 +2216,11 @@ public final class Proto {
 
       public Builder clear() {
         super.clear();
-        relativeReceptor_ = java.util.Collections.emptyList();
+        boardReceptor_ = java.util.Collections.emptyList();
         bitField0_ = (bitField0_ & ~0x00000001);
         uniqueId_ = java.util.Collections.emptyList();
         bitField0_ = (bitField0_ & ~0x00000002);
-        relativeCell_ = java.util.Collections.emptyList();
+        pieceCell_ = java.util.Collections.emptyList();
         bitField0_ = (bitField0_ & ~0x00000004);
         return this;
       }
@@ -2926,20 +2250,20 @@ public final class Proto {
         blokus.Proto.MoveList result = new blokus.Proto.MoveList(this);
         int from_bitField0_ = bitField0_;
         if (((bitField0_ & 0x00000001) == 0x00000001)) {
-          relativeReceptor_ = java.util.Collections.unmodifiableList(relativeReceptor_);
+          boardReceptor_ = java.util.Collections.unmodifiableList(boardReceptor_);
           bitField0_ = (bitField0_ & ~0x00000001);
         }
-        result.relativeReceptor_ = relativeReceptor_;
+        result.boardReceptor_ = boardReceptor_;
         if (((bitField0_ & 0x00000002) == 0x00000002)) {
           uniqueId_ = java.util.Collections.unmodifiableList(uniqueId_);
           bitField0_ = (bitField0_ & ~0x00000002);
         }
         result.uniqueId_ = uniqueId_;
         if (((bitField0_ & 0x00000004) == 0x00000004)) {
-          relativeCell_ = java.util.Collections.unmodifiableList(relativeCell_);
+          pieceCell_ = java.util.Collections.unmodifiableList(pieceCell_);
           bitField0_ = (bitField0_ & ~0x00000004);
         }
-        result.relativeCell_ = relativeCell_;
+        result.pieceCell_ = pieceCell_;
         onBuilt();
         return result;
       }
@@ -2955,13 +2279,13 @@ public final class Proto {
 
       public Builder mergeFrom(blokus.Proto.MoveList other) {
         if (other == blokus.Proto.MoveList.getDefaultInstance()) return this;
-        if (!other.relativeReceptor_.isEmpty()) {
-          if (relativeReceptor_.isEmpty()) {
-            relativeReceptor_ = other.relativeReceptor_;
+        if (!other.boardReceptor_.isEmpty()) {
+          if (boardReceptor_.isEmpty()) {
+            boardReceptor_ = other.boardReceptor_;
             bitField0_ = (bitField0_ & ~0x00000001);
           } else {
-            ensureRelativeReceptorIsMutable();
-            relativeReceptor_.addAll(other.relativeReceptor_);
+            ensureBoardReceptorIsMutable();
+            boardReceptor_.addAll(other.boardReceptor_);
           }
           onChanged();
         }
@@ -2975,13 +2299,13 @@ public final class Proto {
           }
           onChanged();
         }
-        if (!other.relativeCell_.isEmpty()) {
-          if (relativeCell_.isEmpty()) {
-            relativeCell_ = other.relativeCell_;
+        if (!other.pieceCell_.isEmpty()) {
+          if (pieceCell_.isEmpty()) {
+            pieceCell_ = other.pieceCell_;
             bitField0_ = (bitField0_ & ~0x00000004);
           } else {
-            ensureRelativeCellIsMutable();
-            relativeCell_.addAll(other.relativeCell_);
+            ensurePieceCellIsMutable();
+            pieceCell_.addAll(other.pieceCell_);
           }
           onChanged();
         }
@@ -3012,67 +2336,67 @@ public final class Proto {
       }
       private int bitField0_;
 
-      private java.util.List<java.lang.Integer> relativeReceptor_ = java.util.Collections.emptyList();
-      private void ensureRelativeReceptorIsMutable() {
+      private java.util.List<java.lang.Integer> boardReceptor_ = java.util.Collections.emptyList();
+      private void ensureBoardReceptorIsMutable() {
         if (!((bitField0_ & 0x00000001) == 0x00000001)) {
-          relativeReceptor_ = new java.util.ArrayList<java.lang.Integer>(relativeReceptor_);
+          boardReceptor_ = new java.util.ArrayList<java.lang.Integer>(boardReceptor_);
           bitField0_ |= 0x00000001;
          }
       }
       /**
-       * <code>repeated int32 relative_receptor = 1;</code>
+       * <code>repeated int32 board_receptor = 1;</code>
        */
       public java.util.List<java.lang.Integer>
-          getRelativeReceptorList() {
-        return java.util.Collections.unmodifiableList(relativeReceptor_);
+          getBoardReceptorList() {
+        return java.util.Collections.unmodifiableList(boardReceptor_);
       }
       /**
-       * <code>repeated int32 relative_receptor = 1;</code>
+       * <code>repeated int32 board_receptor = 1;</code>
        */
-      public int getRelativeReceptorCount() {
-        return relativeReceptor_.size();
+      public int getBoardReceptorCount() {
+        return boardReceptor_.size();
       }
       /**
-       * <code>repeated int32 relative_receptor = 1;</code>
+       * <code>repeated int32 board_receptor = 1;</code>
        */
-      public int getRelativeReceptor(int index) {
-        return relativeReceptor_.get(index);
+      public int getBoardReceptor(int index) {
+        return boardReceptor_.get(index);
       }
       /**
-       * <code>repeated int32 relative_receptor = 1;</code>
+       * <code>repeated int32 board_receptor = 1;</code>
        */
-      public Builder setRelativeReceptor(
+      public Builder setBoardReceptor(
           int index, int value) {
-        ensureRelativeReceptorIsMutable();
-        relativeReceptor_.set(index, value);
+        ensureBoardReceptorIsMutable();
+        boardReceptor_.set(index, value);
         onChanged();
         return this;
       }
       /**
-       * <code>repeated int32 relative_receptor = 1;</code>
+       * <code>repeated int32 board_receptor = 1;</code>
        */
-      public Builder addRelativeReceptor(int value) {
-        ensureRelativeReceptorIsMutable();
-        relativeReceptor_.add(value);
+      public Builder addBoardReceptor(int value) {
+        ensureBoardReceptorIsMutable();
+        boardReceptor_.add(value);
         onChanged();
         return this;
       }
       /**
-       * <code>repeated int32 relative_receptor = 1;</code>
+       * <code>repeated int32 board_receptor = 1;</code>
        */
-      public Builder addAllRelativeReceptor(
+      public Builder addAllBoardReceptor(
           java.lang.Iterable<? extends java.lang.Integer> values) {
-        ensureRelativeReceptorIsMutable();
+        ensureBoardReceptorIsMutable();
         com.google.protobuf.AbstractMessageLite.Builder.addAll(
-            values, relativeReceptor_);
+            values, boardReceptor_);
         onChanged();
         return this;
       }
       /**
-       * <code>repeated int32 relative_receptor = 1;</code>
+       * <code>repeated int32 board_receptor = 1;</code>
        */
-      public Builder clearRelativeReceptor() {
-        relativeReceptor_ = java.util.Collections.emptyList();
+      public Builder clearBoardReceptor() {
+        boardReceptor_ = java.util.Collections.emptyList();
         bitField0_ = (bitField0_ & ~0x00000001);
         onChanged();
         return this;
@@ -3144,67 +2468,67 @@ public final class Proto {
         return this;
       }
 
-      private java.util.List<java.lang.Integer> relativeCell_ = java.util.Collections.emptyList();
-      private void ensureRelativeCellIsMutable() {
+      private java.util.List<java.lang.Integer> pieceCell_ = java.util.Collections.emptyList();
+      private void ensurePieceCellIsMutable() {
         if (!((bitField0_ & 0x00000004) == 0x00000004)) {
-          relativeCell_ = new java.util.ArrayList<java.lang.Integer>(relativeCell_);
+          pieceCell_ = new java.util.ArrayList<java.lang.Integer>(pieceCell_);
           bitField0_ |= 0x00000004;
          }
       }
       /**
-       * <code>repeated int32 relative_cell = 3;</code>
+       * <code>repeated int32 piece_cell = 3;</code>
        */
       public java.util.List<java.lang.Integer>
-          getRelativeCellList() {
-        return java.util.Collections.unmodifiableList(relativeCell_);
+          getPieceCellList() {
+        return java.util.Collections.unmodifiableList(pieceCell_);
       }
       /**
-       * <code>repeated int32 relative_cell = 3;</code>
+       * <code>repeated int32 piece_cell = 3;</code>
        */
-      public int getRelativeCellCount() {
-        return relativeCell_.size();
+      public int getPieceCellCount() {
+        return pieceCell_.size();
       }
       /**
-       * <code>repeated int32 relative_cell = 3;</code>
+       * <code>repeated int32 piece_cell = 3;</code>
        */
-      public int getRelativeCell(int index) {
-        return relativeCell_.get(index);
+      public int getPieceCell(int index) {
+        return pieceCell_.get(index);
       }
       /**
-       * <code>repeated int32 relative_cell = 3;</code>
+       * <code>repeated int32 piece_cell = 3;</code>
        */
-      public Builder setRelativeCell(
+      public Builder setPieceCell(
           int index, int value) {
-        ensureRelativeCellIsMutable();
-        relativeCell_.set(index, value);
+        ensurePieceCellIsMutable();
+        pieceCell_.set(index, value);
         onChanged();
         return this;
       }
       /**
-       * <code>repeated int32 relative_cell = 3;</code>
+       * <code>repeated int32 piece_cell = 3;</code>
        */
-      public Builder addRelativeCell(int value) {
-        ensureRelativeCellIsMutable();
-        relativeCell_.add(value);
+      public Builder addPieceCell(int value) {
+        ensurePieceCellIsMutable();
+        pieceCell_.add(value);
         onChanged();
         return this;
       }
       /**
-       * <code>repeated int32 relative_cell = 3;</code>
+       * <code>repeated int32 piece_cell = 3;</code>
        */
-      public Builder addAllRelativeCell(
+      public Builder addAllPieceCell(
           java.lang.Iterable<? extends java.lang.Integer> values) {
-        ensureRelativeCellIsMutable();
+        ensurePieceCellIsMutable();
         com.google.protobuf.AbstractMessageLite.Builder.addAll(
-            values, relativeCell_);
+            values, pieceCell_);
         onChanged();
         return this;
       }
       /**
-       * <code>repeated int32 relative_cell = 3;</code>
+       * <code>repeated int32 piece_cell = 3;</code>
        */
-      public Builder clearRelativeCell() {
-        relativeCell_ = java.util.Collections.emptyList();
+      public Builder clearPieceCell() {
+        pieceCell_ = java.util.Collections.emptyList();
         bitField0_ = (bitField0_ & ~0x00000004);
         onChanged();
         return this;
@@ -3221,11 +2545,6 @@ public final class Proto {
     // @@protoc_insertion_point(class_scope:blokus.MoveList)
   }
 
-  private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_blokus_States_descriptor;
-  private static
-    com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_blokus_States_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_blokus_State_descriptor;
   private static
@@ -3245,14 +2564,13 @@ public final class Proto {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\014blokus.proto\022\006blokus\"&\n\006States\022\034\n\005stat" +
-      "e\030\001 \003(\0132\r.blokus.State\"\211\001\n\005State\022\036\n\004blue" +
+      "\n\014blokus.proto\022\006blokus\"\211\001\n\005State\022\036\n\004blue" +
       "\030\001 \003(\0132\020.blokus.MoveList\022 \n\006yellow\030\002 \003(\013" +
       "2\020.blokus.MoveList\022\035\n\003red\030\003 \003(\0132\020.blokus" +
       ".MoveList\022\037\n\005green\030\004 \003(\0132\020.blokus.MoveLi" +
-      "st\"O\n\010MoveList\022\031\n\021relative_receptor\030\001 \003(" +
-      "\005\022\021\n\tunique_id\030\002 \003(\005\022\025\n\rrelative_cell\030\003 " +
-      "\003(\005B\017\n\006blokusB\005Proto"
+      "st\"I\n\010MoveList\022\026\n\016board_receptor\030\001 \003(\005\022\021" +
+      "\n\tunique_id\030\002 \003(\005\022\022\n\npiece_cell\030\003 \003(\005B\017\n" +
+      "\006blokusB\005Proto"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -3266,24 +2584,18 @@ public final class Proto {
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
         }, assigner);
-    internal_static_blokus_States_descriptor =
-      getDescriptor().getMessageTypes().get(0);
-    internal_static_blokus_States_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_blokus_States_descriptor,
-        new java.lang.String[] { "State", });
     internal_static_blokus_State_descriptor =
-      getDescriptor().getMessageTypes().get(1);
+      getDescriptor().getMessageTypes().get(0);
     internal_static_blokus_State_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_blokus_State_descriptor,
         new java.lang.String[] { "Blue", "Yellow", "Red", "Green", });
     internal_static_blokus_MoveList_descriptor =
-      getDescriptor().getMessageTypes().get(2);
+      getDescriptor().getMessageTypes().get(1);
     internal_static_blokus_MoveList_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_blokus_MoveList_descriptor,
-        new java.lang.String[] { "RelativeReceptor", "UniqueId", "RelativeCell", });
+        new java.lang.String[] { "BoardReceptor", "UniqueId", "PieceCell", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

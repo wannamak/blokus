@@ -5,13 +5,23 @@ import java.util.Objects;
 /**
  * Sorted by y then x.
  */
-class YX implements Comparable<YX> {
+public class YX implements Comparable<YX> {
   int x;
   int y;
+
+  public static final int ENCODING_Y_WIDTH = 40;
 
   public YX(int y, int x) {
     this.y = y;
     this.x = x;
+  }
+
+  public int encode() {
+    return y * ENCODING_Y_WIDTH + x;
+  }
+
+  public static YX decode(int coded) {
+    return new YX(coded / ENCODING_Y_WIDTH, coded % ENCODING_Y_WIDTH);
   }
 
   public int hashCode() {

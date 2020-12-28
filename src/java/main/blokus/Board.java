@@ -19,8 +19,7 @@ import java.util.logging.Logger;
 public class Board implements Comparable<Board> {
   private static final boolean USE_MIRROR = false;
 
-  private Logger logger = Logger.getLogger(Board.class.getName());
-
+  private final Logger logger = Logger.getLogger(Board.class.getName());
   private final Set<YX> receptors;
   private final char[][] board;
 

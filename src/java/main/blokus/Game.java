@@ -15,7 +15,7 @@ import java.util.TreeSet;
 
 public class Game implements Comparable<Game> {
   private final Map<Color, SortedSet<Integer>> availablePieceIds;
-  private final Map<Piece, List<YX>> playLog;
+  private final PlayLog playLog;
   private final int numPlayers;
   private final Board board;
 
@@ -31,7 +31,7 @@ public class Game implements Comparable<Game> {
     }
     this.currentPlayer = Color.values()[0];
     this.board = new Board();
-    this.playLog = new LinkedHashMap<>();
+    this.playLog = new PlayLog();
   }
 
   public int getNumPlayers() {
@@ -42,7 +42,7 @@ public class Game implements Comparable<Game> {
     return currentPlayer;
   }
 
-  private Game(Map<Color, SortedSet<Integer>> pieceIds, Map<Piece, List<YX>> playLog,
+  private Game(Map<Color, SortedSet<Integer>> pieceIds, PlayLog playLog,
       int numPlayers, Color currentPlayer, Board board) {
     this.availablePieceIds = pieceIds;
     this.playLog = playLog;
@@ -58,10 +58,7 @@ public class Game implements Comparable<Game> {
   public void playPiece(Piece piece, YX boardReceptor, YX pieceCell) {
     board.playPiece(piece, boardReceptor, pieceCell);
     removePiece(piece.getPieceId());
-    List<YX> log = new ArrayList<>();
-    log.add(boardReceptor);
-    log.add(pieceCell);
-    playLog.put(piece, log);
+    playLog.log(piece, boardReceptor, pieceCell);
   }
 
   public void removePiece(int pieceId) {
@@ -72,8 +69,8 @@ public class Game implements Comparable<Game> {
     return availablePieceIds.get(currentPlayer);
   }
 
-  public Set<Piece> getPiecesPlayedInOrder() {
-    return playLog.keySet();
+  public PlayLog getPlayLog() {
+    return playLog;
   }
 
   public Board getBoard() {
@@ -90,32 +87,13 @@ public class Game implements Comparable<Game> {
     for (Color color : availablePieceIds.keySet()) {
       newPieces.put(color, new TreeSet<>(availablePieceIds.get(color)));
     }
-    Map<Piece, List<YX>> newPlayLog = new LinkedHashMap<>();
-    for (Piece piece : playLog.keySet()) {
-      newPlayLog.put(piece, new ArrayList<>(playLog.get(piece)));
-    }
-    return new Game(newPieces, playLog, numPlayers, currentPlayer, board.copy());
+    return new Game(newPieces, playLog.copy(), numPlayers, currentPlayer, board.copy());
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    //sb.append("current=" + currentPlayer + ", piecesAvail=" + pieceIds.get(currentPlayer));
-    for (Piece piece : playLog.keySet()) {
-      sb.append("id=")
-          .append(piece.getPieceId())
-          .append(":uniqueid=")
-          .append(piece.getUniquePieceId())
-          .append(":rot=")
-          .append(piece.getRotationId())
-          .append(":flipped=")
-          .append(Boolean.toString(piece.isFlipped()).substring(0, 1))
-          .append(":cell=")
-          .append(playLog.get(piece).get(1))
-          .append(":at=")
-          .append(playLog.get(piece).get(0))
-          .append(System.lineSeparator());
-    }
+    playLog.append(sb);
     sb.append(board);
     return sb.toString();
   }
