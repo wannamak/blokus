@@ -1,16 +1,14 @@
 package blokus;
 
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -20,19 +18,36 @@ public class Board implements Comparable<Board> {
   private static final boolean USE_MIRROR = false;
 
   private final Logger logger = Logger.getLogger(Board.class.getName());
-  private final Set<YX> receptors;
+  private final Map<Color, Set<YX>> receptors;
+  private final Map<Color, YX> initialReceptors;
   private final char[][] board;
 
+  private int maxY;
+  private int maxX;
+
   public Board() {
-    this.receptors = new TreeSet<>();
-    this.receptors.add(new YX(0, 0));
-    this.board = new char[40][40];
+    this(new BoardConfiguration());
+  }
+
+  public Board(BoardConfiguration config) {
+    this.initialReceptors = config.getInitialReceptors();
+    this.receptors = new HashMap<>();
+    for (Color color : Color.values()) {
+      this.receptors.put(color, new TreeSet<>());
+      this.receptors.get(color).add(initialReceptors.get(color));
+    }
+    this.board = new char[config.getHeight()][config.getWidth()];
+    this.maxX = 0;
+    this.maxY = 0;
   }
 
   // copy constructor
-  private Board(Set<YX> receptors, char[][] board) {
+  Board(Map<Color, YX> initialReceptors, Map<Color, Set<YX>> receptors, char[][] board, int maxX, int maxY) {
+    this.initialReceptors = initialReceptors;
     this.receptors = receptors;
     this.board = board;
+    this.maxX = maxX;
+    this.maxY = maxY;
   }
 
   public Board copy() {
@@ -43,7 +58,11 @@ public class Board implements Comparable<Board> {
       newBoard[i] = new char[rowLength];
       System.arraycopy(row, 0, newBoard[i], 0, rowLength);
     }
-    return new Board(new HashSet<>(receptors), newBoard);
+    Map<Color, Set<YX>> newReceptors = new HashMap<>();
+    for (Color color : Color.values()) {
+      newReceptors.put(color, new TreeSet<>(receptors.get(color)));
+    }
+    return new Board(initialReceptors, newReceptors, newBoard, maxX, maxY);
   }
 
   private char[][] getBoardMirror() {
@@ -57,20 +76,24 @@ public class Board implements Comparable<Board> {
   }
 
   public Board mirror() {
-    Set<YX> newReceptors = new HashSet<>();
-    for (YX receptor : receptors) {
-      //noinspection SuspiciousNameCombination
-      newReceptors.add(new YX(receptor.x, receptor.y));
+    Map<Color, Set<YX>> newReceptors = new HashMap<>();
+    for (Color color : Color.values()) {
+      newReceptors.put(color, new TreeSet<>());
+      for (YX receptor : receptors.get(color)) {
+        //noinspection SuspiciousNameCombination
+        newReceptors.get(color).add(new YX(receptor.x, receptor.y));
+      }
     }
     Map<Piece, List<YX>> newPlayLog = new TreeMap<>();
-    return new Board(newReceptors, getBoardMirror());
+    //noinspection SuspiciousNameCombination
+    return new Board(initialReceptors, newReceptors, getBoardMirror(), maxY, maxX);
   }
 
-  public Set<YX> getReceptors() {
-    return receptors;
+  public Set<YX> getReceptors(Color color) {
+    return receptors.get(color);
   }
 
-  public void playPiece(Piece piece, YX boardReceptor, YX pieceCell) {
+  public void playPiece(Color color, Piece piece, YX boardReceptor, YX pieceCell) {
     int originX = boardReceptor.x - pieceCell.x;
     int originY = boardReceptor.y - pieceCell.y;
     Square[][] squares = piece.getSquares();
@@ -78,31 +101,32 @@ public class Board implements Comparable<Board> {
       for (int xx = 0; xx < squares[0].length; xx++) {
         int y = originY + yy;
         int x = originX + xx;
+        YX yx = new YX(y, x);
         switch (squares[yy][xx]) {
           case CELL -> {
             Preconditions.checkState(!(y < 0 || y >= board.length));
             Preconditions.checkState(!(x < 0 || x >= board[0].length));
-            Preconditions.checkState(board[y][x] == 0);
-            board[y][x] = 1;
-            YX yx = new YX(y, x);
-            receptors.remove(yx);
+            Preconditions.checkState(!isACellOfAnyColor(yx));
+            board[y][x] = color.getCellRepresentation();
+            receptors.get(color).remove(yx);
+            maxX = Math.max(maxX, x);
+            maxY = Math.max(maxY, y);
           }
           case RECEPTOR -> {
             if (y >= 0 && y < board.length
                 && x >= 0 && x < board[0].length) {
-              YX yx = new YX(y, x);
-              if (board[y][x] == 1) {
-                receptors.remove(yx);
+              if (board[y][x] == color.getCellRepresentation()) {
+                receptors.get(color).remove(yx);
               } else if (board[y][x] == 0) {
-                receptors.add(yx);
+                receptors.get(color).add(yx);
               }
             }
           }
           case ADJACENT -> {
             if (y >= 0 && y < board.length
                 && x >= 0 && x < board[0].length
-                && board[y][x] == 0) {
-              board[y][x] = 2;
+                && !isACellOfAnyColor(yx)) {
+              board[y][x] |= color.getAdjacentBitmap();
             }
           }
           case EMPTY -> {
@@ -112,7 +136,7 @@ public class Board implements Comparable<Board> {
     }
   }
 
-  public boolean canPlay(Piece piece, YX boardReceptor, YX pieceCell) {
+  public boolean canPlay(Color color, Piece piece, YX boardReceptor, YX pieceCell) {
     Set<YX> matedBoardReceptors = new HashSet<>();
     Set<YX> matedPieceReceptors = new HashSet<>();
     int originX = boardReceptor.x - pieceCell.x;
@@ -122,6 +146,7 @@ public class Board implements Comparable<Board> {
       for (int xx = 0; xx < squares[0].length; xx++) {
         int y = originY + yy;
         int x = originX + xx;
+        YX yx = new YX(y, x);
         switch (squares[yy][xx]) {
           case CELL -> {
             if (y < 0 || y >= board.length) {
@@ -130,25 +155,25 @@ public class Board implements Comparable<Board> {
             if (x < 0 || x >= board[0].length) {
               return false;
             }
-            if (board[y][x] > 0) {
+            if (isACellOfAnyColor(yx)
+                || isAdjacentToColor(yx, color)) {
               return false;
             }
-            YX yx = new YX(y, x);
-            if (receptors.contains(yx)) {
+            if (receptors.get(color).contains(yx)) {
               matedBoardReceptors.add(yx);
             }
           }
           case RECEPTOR -> {
             if (y >= 0 && y < board.length
                 && x >= 0 && x < board[0].length
-                && board[y][x] == 1) {
-              matedPieceReceptors.add(new YX(y, x));
+                && board[y][x] == color.getCellRepresentation()) {
+              matedPieceReceptors.add(yx);
             }
           }
           case ADJACENT -> {
             if (y >= 0 && y < board.length
                 && x >= 0 && x < board[0].length
-                && board[y][x] == 1) {
+                && board[y][x] == color.getCellRepresentation()) {
               return false;
             }
           }
@@ -158,10 +183,26 @@ public class Board implements Comparable<Board> {
       }
     }
 
-    boolean isFirstMove = boardReceptor.equals(new YX(0, 0));
+    boolean isFirstMove = boardReceptor.equals(initialReceptors.get(color));
     return isFirstMove
         ? !matedBoardReceptors.isEmpty()
         : !matedPieceReceptors.isEmpty();
+  }
+
+  boolean isACellOfAnyColor(YX yx) {
+    return Color.REPRESENTATION_TO_COLOR.containsKey(board[yx.y][yx.x]);
+  }
+
+  boolean isAdjacentToColor(YX yx, Color color) {
+    return ((char) (board[yx.y][yx.x] & color.getAdjacentBitmap())) > 0;
+  }
+
+  public int getMaxWidth() {
+    return maxX;
+  }
+
+  public int getMaxHeight() {
+    return maxY;
   }
 
   @Override
@@ -202,11 +243,12 @@ public class Board implements Comparable<Board> {
   public String toString() {
     StringBuilder sb = new StringBuilder();
 
-    int max = 18;
-    for (int y = 0; y < max; y++) {
-      for (int x = 0; x < max; x++) {
-        if (board[y][x] == 1) {
-          sb.append("B");
+    int localMaxY = Math.min(board.length, maxY + 2);
+    int localMaxX = Math.min(board[0].length, maxX + 2);
+    for (int y = 0; y < localMaxY; y++) {
+      for (int x = 0; x < localMaxX; x++) {
+        if (Color.REPRESENTATION_TO_COLOR.containsKey(board[y][x])) {
+          sb.append(board[y][x]);
         } else {
           sb.append(".");
 //        } else {

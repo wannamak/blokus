@@ -40,26 +40,27 @@ public class GameCodec {
         state.getRedCount(), state.getGreenCount());
     for (int i = 0; i < max; i++) {
       if (i < state.getBlueCount()) {
-        decodeMoveList(game, state.getBlue(i), pieceLibrary);
+        decodeMoveList(Color.BLUE, game, state.getBlue(i), pieceLibrary);
       }
       if (i < state.getYellowCount()) {
-        decodeMoveList(game, state.getYellow(i), pieceLibrary);
+        decodeMoveList(Color.YELLOW, game, state.getYellow(i), pieceLibrary);
       }
       if (i < state.getRedCount()) {
-        decodeMoveList(game, state.getRed(i), pieceLibrary);
+        decodeMoveList(Color.RED, game, state.getRed(i), pieceLibrary);
       }
       if (i < state.getGreenCount()) {
-        decodeMoveList(game, state.getGreen(i), pieceLibrary);
+        decodeMoveList(Color.GREEN, game, state.getGreen(i), pieceLibrary);
       }
     }
   }
 
-  private void decodeMoveList(Game game, Proto.MoveList moveList, PieceLibrary pieceLibrary) {
+  private void decodeMoveList(Color color, Game game, Proto.MoveList moveList,
+      PieceLibrary pieceLibrary) {
     for (int i = 0; i < moveList.getUniqueIdCount(); i++) {
       Piece piece = pieceLibrary.getPieceByUniqueId(moveList.getUniqueId(i));
       YX boardReceptor = YX.decode(moveList.getBoardReceptor(i));
       YX pieceCell = YX.decode(moveList.getPieceCell(i));
-      game.playPiece(piece, boardReceptor, pieceCell);
+      game.playPiece(color, piece, boardReceptor, pieceCell);
     }
   }
 }

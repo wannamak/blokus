@@ -49,8 +49,8 @@ public class PlayLog {
     this.entries.addAll(entries);
   }
 
-  public void log(Piece piece, YX boardReceptor, YX pieceCell) {
-    entries.add(new PlayLogEntry(Color.BLUE, piece, boardReceptor, pieceCell));
+  public void log(Color color, Piece piece, YX boardReceptor, YX pieceCell) {
+    entries.add(new PlayLogEntry(color, piece, boardReceptor, pieceCell));
   }
 
   public List<PlayLogEntry> getEntries() {

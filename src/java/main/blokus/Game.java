@@ -55,14 +55,15 @@ public class Game implements Comparable<Game> {
     return true;
   }
 
-  public void playPiece(Piece piece, YX boardReceptor, YX pieceCell) {
-    board.playPiece(piece, boardReceptor, pieceCell);
-    removePiece(piece.getPieceId());
-    playLog.log(piece, boardReceptor, pieceCell);
+  public void playPiece(Color color, Piece piece, YX boardReceptor, YX pieceCell) {
+    board.playPiece(color, piece, boardReceptor, pieceCell);
+    removePiece(color, piece.getPieceId());
+    playLog.log(color, piece, boardReceptor, pieceCell);
   }
 
-  public void removePiece(int pieceId) {
-    Preconditions.checkState(availablePieceIds.get(currentPlayer).remove(pieceId));
+  public void removePiece(Color color, int pieceId) {
+    // TODO currentPlayer vs color
+    Preconditions.checkState(availablePieceIds.get(color).remove(pieceId));
   }
 
   public SortedSet<Integer> getAvailablePieces() {
