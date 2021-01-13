@@ -28,5 +28,10 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="com.google.protobuf:protobuf-java:3.10.0" level="project" />
+    <orderEntry type="library" name="org.eclipse.jetty:jetty-server:10.0.0" level="project" />
+    <orderEntry type="library" name="org.eclipse.jetty:jetty-servlet:10.0.0" level="project" />
+    <orderEntry type="library" name="javax.json:javax.json-api:1.1.4" level="project" />
+    <orderEntry type="library" name="org.slf4j:slf4j-jdk14:1.8.0-beta4" level="project" />
+    <orderEntry type="library" name="org.glassfish:javax.json:1.1.4" level="project" />
   </component>
 </module>

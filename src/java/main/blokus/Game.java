@@ -2,6 +2,8 @@ package blokus;
 
 import com.google.common.base.Preconditions;
 
+import javax.json.Json;
+import javax.json.JsonArrayBuilder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -14,6 +16,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 public class Game implements Comparable<Game> {
+  private final PieceLibrary pieceLibrary;
   private final Map<Color, SortedSet<Integer>> availablePieceIds;
   private final PlayLog playLog;
   private final int numPlayers;
@@ -21,17 +24,19 @@ public class Game implements Comparable<Game> {
 
   private Color currentPlayer;
 
-  public Game(int numPlayers, Set<Integer> allPieceIds) {
+  public Game(int numPlayers, PieceLibrary pieceLibrary) {
+    this.pieceLibrary = pieceLibrary;
     this.numPlayers = numPlayers;
     this.availablePieceIds = new HashMap<>();
     int colorIndex = 0;
     for (int i = 0; i < numPlayers; i++) {
-      SortedSet<Integer> playerPieceIds = new TreeSet<>(allPieceIds);
+      SortedSet<Integer> playerPieceIds = new TreeSet<>(pieceLibrary.getAllPieceIds());
       availablePieceIds.put(Color.values()[colorIndex++], playerPieceIds);
     }
     this.currentPlayer = Color.values()[0];
     this.board = new Board();
     this.playLog = new PlayLog();
+    this.currentPlayer = Color.BLUE;
   }
 
   public int getNumPlayers() {
@@ -43,12 +48,13 @@ public class Game implements Comparable<Game> {
   }
 
   private Game(Map<Color, SortedSet<Integer>> pieceIds, PlayLog playLog,
-      int numPlayers, Color currentPlayer, Board board) {
+      int numPlayers, Color currentPlayer, Board board, PieceLibrary pieceLibrary) {
     this.availablePieceIds = pieceIds;
     this.playLog = playLog;
     this.numPlayers = numPlayers;
     this.currentPlayer = currentPlayer;
     this.board = board;
+    this.pieceLibrary = pieceLibrary;
   }
 
   public boolean hasWinner() {
@@ -88,7 +94,25 @@ public class Game implements Comparable<Game> {
     for (Color color : availablePieceIds.keySet()) {
       newPieces.put(color, new TreeSet<>(availablePieceIds.get(color)));
     }
-    return new Game(newPieces, playLog.copy(), numPlayers, currentPlayer, board.copy());
+    return new Game(newPieces, playLog.copy(), numPlayers, currentPlayer, board.copy(), pieceLibrary);
+  }
+
+  public void iterateAvailableMoves(MoveCallback callback) {
+    for (int pieceId : availablePieceIds.get(currentPlayer)) {
+      for (Piece piece : pieceLibrary.getPiecePermutations(pieceId)) {
+        for (YX boardReceptor : getBoard().getReceptors(currentPlayer)) {
+          for (YX pieceCell : piece.getCells()) {
+            if (getBoard().canPlay(currentPlayer, piece, boardReceptor, pieceCell)) {
+              callback.invoke(piece, boardReceptor, pieceCell);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  public interface MoveCallback {
+    public void invoke(Piece piece, YX boardReceptor, YX pieceCell);
   }
 
   @Override

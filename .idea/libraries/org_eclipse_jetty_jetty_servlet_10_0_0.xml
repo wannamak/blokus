@@ -1,0 +1,17 @@
+<component name="libraryTable">
+  <library name="org.eclipse.jetty:jetty-servlet:10.0.0" type="repository">
+    <properties maven-id="org.eclipse.jetty:jetty-servlet:10.0.0" />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/jetty/jetty-servlet/10.0.0/jetty-servlet-10.0.0.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/jetty/jetty-security/10.0.0/jetty-security-10.0.0.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/jetty/jetty-server/10.0.0/jetty-server-10.0.0.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/jetty/toolchain/jetty-servlet-api/4.0.5/jetty-servlet-api-4.0.5.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/jetty/jetty-http/10.0.0/jetty-http-10.0.0.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/jetty/jetty-util/10.0.0/jetty-util-10.0.0.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/jetty/jetty-io/10.0.0/jetty-io-10.0.0.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/slf4j/slf4j-api/2.0.0-alpha1/slf4j-api-2.0.0-alpha1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

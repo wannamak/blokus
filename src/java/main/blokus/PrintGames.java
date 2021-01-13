@@ -29,7 +29,7 @@ public class PrintGames {
         if (state == null) {
           break;
         }
-        Game game = new Game(4, pieceLibrary.getAllPieceIds());
+        Game game = new Game(4, pieceLibrary);
         gameCodec.decode(game, state, pieceLibrary);
         logger.info(game.toString());
         count++;

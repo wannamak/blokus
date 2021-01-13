@@ -37,7 +37,7 @@ public class SimpleIterator {
   }
 
   public void iterate(int depthLimit, File output) throws IOException {
-    Game initialGame = new Game(1, library.getAllPieceIds());
+    Game initialGame = new Game(1, library);
     Set<Game> games = new HashSet<>();
     games.add(initialGame);
 

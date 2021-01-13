@@ -106,7 +106,8 @@ public class Board implements Comparable<Board> {
           case CELL -> {
             Preconditions.checkState(!(y < 0 || y >= board.length));
             Preconditions.checkState(!(x < 0 || x >= board[0].length));
-            Preconditions.checkState(!isACellOfAnyColor(yx));
+            Preconditions.checkState(!isACellOfAnyColor(yx),
+                "Expected " + yx + " to be blank\n" + toString());
             board[y][x] = color.getCellRepresentation();
             receptors.get(color).remove(yx);
             maxX = Math.max(maxX, x);
@@ -191,6 +192,21 @@ public class Board implements Comparable<Board> {
 
   boolean isACellOfAnyColor(YX yx) {
     return Color.REPRESENTATION_TO_COLOR.containsKey(board[yx.y][yx.x]);
+  }
+
+  public Map<Color, Set<Integer>> getCellMap() {
+    Map<Color, Set<Integer>> result = new HashMap<>();
+    for (Color color : Color.values()) {
+      result.put(color, new TreeSet<>());
+    }
+    for (int y = 0; y < board.length; y++) {
+      for (int x = 0; x < board[0].length; x++) {
+        if (Color.REPRESENTATION_TO_COLOR.containsKey(board[y][x])) {
+          result.get(Color.REPRESENTATION_TO_COLOR.get(board[y][x])).add(new YX(y, x).encode());
+        }
+      }
+    }
+    return result;
   }
 
   boolean isAdjacentToColor(YX yx, Color color) {

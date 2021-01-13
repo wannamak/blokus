@@ -55,7 +55,7 @@ public class GameIterator {
         break;
       }
       inputCount++;
-      Game game = new Game(4, pieceLibrary.getAllPieceIds());
+      Game game = new Game(4, pieceLibrary);
       gameCodec.decode(game, state, pieceLibrary);
       iterateGame(game, (newGame) -> {
         Proto.State newState = gameCodec.encode(game);
@@ -76,7 +76,7 @@ public class GameIterator {
   }
 
   interface GameCallback {
-    public void invoke(Game game) throws IOException;
+    void invoke(Game game) throws IOException;
   }
 
   private void iterateGame(Game game, GameCallback callback) throws IOException {

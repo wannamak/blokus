@@ -1,15 +1,18 @@
 package blokus;
 
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 import java.util.Objects;
 
 /**
  * Sorted by y then x.
  */
 public class YX implements Comparable<YX> {
-  int x;
-  int y;
+  public int x;
+  public int y;
 
-  public static final int ENCODING_Y_WIDTH = 40;
+  public static final int ENCODING_Y_WIDTH = 20;
 
   public YX(int y, int x) {
     this.y = y;
@@ -38,6 +41,16 @@ public class YX implements Comparable<YX> {
 
   public String toString() {
     return "" + y + "," + x;
+  }
+
+  public JsonObjectBuilder toJson() {
+    return Json.createObjectBuilder()
+        .add("x", x)
+        .add("y", y);
+  }
+
+  public static YX fromJson(JsonObject object) {
+    return new YX(object.getInt("y"), object.getInt("x"));
   }
 
   @Override

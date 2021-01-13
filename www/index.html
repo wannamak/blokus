@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Blokus</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="blokus.js"></script>
+  <style>
+#container {
+  display: flex;
+}
+#board {
+  flex: 1 auto;
+  display: grid;
+  grid-template-columns: 40px repeat(21, 40px);
+  grid-template-rows: 40px repeat(20, 40px);
+}
+#panel {
+  flex: 0 1 auto;
+  display: flex;
+  flex-flow: column nowrap;
+  height: 100vh;
+}
+#scoreboard {
+  display: flex;
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+.score {
+  padding: 20px;
+  color: white;
+  font-size: 30px;
+}
+#blue-score {
+  background: blue;
+  border: 5px dashed blue;
+}
+#yellow-score {
+  background: yellow;
+  border: 5px dashed yellow;
+  color: black;
+}
+#red-score {
+  background: red;
+  border: 5px dashed red;
+}
+#green-score {
+  background: green;
+  border: 5px dashed green;
+}
+#movelist {
+  border: 1px solid gray;
+  padding: 5px 15px 15px 5px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  overflow-y: scroll;
+}
+.movelist-li:hover {
+  background: yellow;
+}
+.movelist-ul {
+  list-style-type: none;
+  margin-left: 5px;
+  margin-right: 0px;
+  padding-left: 10px;
+  padding-right: 0px;
+}
+#messages {
+  border: 1px solid gray;
+  padding: 5px;
+  margin-bottom: 20px;
+}
+.receptor-blue {
+  border: 3px solid blue;
+}
+.receptor-yellow {
+  border: 3px solid yellow;
+}
+.receptor-red {
+  border: 3px solid red;
+}
+.receptor-green {
+  border: 3px solid green;
+}
+.cell-blue {
+  background: blue !important;
+}
+.cell-yellow {
+  background: yellow !important;
+}
+.cell-red {
+  background: red !important;
+}
+.cell-green {
+  background: green !important;
+}
+.move-candidate-blue {
+  background: repeating-linear-gradient(
+      45deg,
+      blue,
+      blue 5px,
+      #dedede 5px,
+      #dedede 10px) !important;
+}
+.move-candidate-yellow {
+  background: repeating-linear-gradient(
+      45deg,
+      yellow,
+      yellow 5px,
+      #dedede 5px,
+      #dedede 10px) !important;
+}
+.move-candidate-red {
+  background: repeating-linear-gradient(
+      45deg,
+      red,
+      red 5px,
+      #dedede 5px,
+      #dedede 10px) !important;
+}
+.move-candidate-green {
+  background: repeating-linear-gradient(
+      45deg,
+      green,
+      green 5px,
+      #dedede 5px,
+      #dedede 10px) !important;
+}
+.hilight {
+  border: 1px solid black;
+}
+.cell {
+  background: #dedede;
+  margin: 2px;
+}
+.label {
+  align-self: center;
+  justify-self: center;
+}
+.currentPlayer {
+  border: 5px dashed black !important;
+}
+a.button {
+  display: inline-block;
+  padding: 0.46em 1.6em;
+  border: 0.1em solid #000000;
+  margin: 0 0.2em 0.2em 0;
+  border-radius: 0.12em;
+  box-sizing: border-box;
+  text-decoration: none;
+  font-family: 'Roboto',sans-serif;
+  font-weight: 300;
+  color: #FFFFFF;
+  text-align: center;
+  transition: all 0.15s;
+  text-shadow: 0 0.04em 0.04em rgba(0,0,0,0.35);
+  background-color: #7878ee;
+}
+a.button:hover {
+  color: #000000;
+  background-color: #FFFFFF;
+}
+  </style>
+</head>
+<body onload="onLoad()">
+  <div id="container">
+    <div id="board">
+    </div>
+    <div id="panel">
+      <div id="scoreboard">
+        <div class="score" id="blue-score">
+          0
+        </div>
+        <div class="score" id="yellow-score">
+          0
+        </div>
+        <div class="score" id="red-score">
+          0
+        </div>
+        <div class="score" id="green-score">
+          0
+        </div>
+      </div>
+      <div id="movelist">
+        <h3>Available Moves</h3>
+        <ul id="move-list-parent">
+        </ul>
+      </div>
+      <div id="messages">
+
+      </div>
+      <div id="buttons">
+        <a onclick="onTakeTurnClick()" class="button">Take Turn</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
