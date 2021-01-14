@@ -9,8 +9,8 @@ import java.util.Objects;
  * Sorted by y then x.
  */
 public class YX implements Comparable<YX> {
-  public int x;
-  public int y;
+  public final int x;
+  public final int y;
 
   public static final int ENCODING_Y_WIDTH = 20;
 
@@ -25,6 +25,10 @@ public class YX implements Comparable<YX> {
 
   public static YX decode(int coded) {
     return new YX(coded / ENCODING_Y_WIDTH, coded % ENCODING_Y_WIDTH);
+  }
+
+  public YX minus(YX operand) {
+    return new YX(this.y - operand.y, this.x - operand.x);
   }
 
   public int hashCode() {

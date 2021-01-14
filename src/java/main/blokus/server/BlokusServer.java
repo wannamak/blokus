@@ -94,6 +94,9 @@ public class BlokusServer {
           YX boardReceptor = YX.fromJson(move.getJsonObject("boardReceptor"));
           YX pieceCell = YX.fromJson(move.getJsonObject("pieceCell"));
           game.playPiece(game.getCurrentPlayer(), piece, boardReceptor, pieceCell);
+          if (!game.nextPlayer()) {
+            // game over
+          }
         }
       }
       writeMoveList(response.getWriter(), game, gameId);
@@ -104,17 +107,23 @@ public class BlokusServer {
     Color currentPlayer = game.getCurrentPlayer();
 
     JsonArrayBuilder moveList = Json.createArrayBuilder();
-    game.iterateAvailableMoves((piece, boardReceptor, pieceCell) -> {
-      JsonArrayBuilder cellList = Json.createArrayBuilder();
-      getCells(piece, boardReceptor, pieceCell).forEach(cellList::add);
-      moveList.add(Json.createObjectBuilder()
-          .add("pieceId", piece.getPieceId())
-          .add("uniquePieceId", piece.getUniquePieceId())
-          .add("boardReceptor", boardReceptor.toJson())
-          .add("pieceCell", pieceCell.toJson())
-          .add("cells", cellList));
-    });
+    game.iterateAvailableMoves(new Game.MoveCallback() {
+      @Override
+      public void attempt() {
+      }
 
+      @Override
+      public void candidate(Piece piece, YX boardReceptor, YX pieceCell) {
+        JsonArrayBuilder cellList = Json.createArrayBuilder();
+        getCells(piece, boardReceptor, pieceCell).forEach(cellList::add);
+        moveList.add(Json.createObjectBuilder()
+            .add("pieceId", piece.getPieceId())
+            .add("uniquePieceId", piece.getUniquePieceId())
+            .add("boardReceptor", boardReceptor.toJson())
+            .add("pieceCell", pieceCell.toJson())
+            .add("cells", cellList));
+      }
+    });
     Set<YX> receptors = game.getBoard().getReceptors(game.getCurrentPlayer());
     JsonArrayBuilder receptorList = Json.createArrayBuilder();
     receptors.forEach(yx -> receptorList.add(yx.encode()));

@@ -7,10 +7,12 @@ import javax.json.JsonArrayBuilder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -21,6 +23,7 @@ public class Game implements Comparable<Game> {
   private final PlayLog playLog;
   private final int numPlayers;
   private final Board board;
+  private int numberConsecutivePlayerSkips;
 
   private Color currentPlayer;
 
@@ -37,6 +40,7 @@ public class Game implements Comparable<Game> {
     this.board = new Board();
     this.playLog = new PlayLog();
     this.currentPlayer = Color.BLUE;
+    this.numberConsecutivePlayerSkips = 0;
   }
 
   public int getNumPlayers() {
@@ -48,17 +52,19 @@ public class Game implements Comparable<Game> {
   }
 
   private Game(Map<Color, SortedSet<Integer>> pieceIds, PlayLog playLog,
-      int numPlayers, Color currentPlayer, Board board, PieceLibrary pieceLibrary) {
+      int numPlayers, Color currentPlayer, Board board, PieceLibrary pieceLibrary,
+      int numberConsecutivePlayerSkips) {
     this.availablePieceIds = pieceIds;
     this.playLog = playLog;
     this.numPlayers = numPlayers;
     this.currentPlayer = currentPlayer;
     this.board = board;
     this.pieceLibrary = pieceLibrary;
+    this.numberConsecutivePlayerSkips = numberConsecutivePlayerSkips;
   }
 
   public boolean hasWinner() {
-    return true;
+    return numberConsecutivePlayerSkips == numPlayers;
   }
 
   public void playPiece(Color color, Piece piece, YX boardReceptor, YX pieceCell) {
@@ -84,6 +90,19 @@ public class Game implements Comparable<Game> {
     return board;
   }
 
+  /** Returns false if the game is over. */
+  public boolean nextPlayer() {
+    while (numberConsecutivePlayerSkips < numPlayers) {
+      currentPlayer = getNextPlayer();
+      if (!hasAvailableMoves()) {
+        numberConsecutivePlayerSkips++;
+      } else {
+        break;
+      }
+    }
+    return numberConsecutivePlayerSkips != numPlayers;
+  }
+
   private Color getNextPlayer() {
     int currentColorIndex = Arrays.asList(Color.values()).indexOf(currentPlayer);
     return Color.values()[currentColorIndex == numPlayers - 1 ? 0 : currentColorIndex + 1];
@@ -94,16 +113,68 @@ public class Game implements Comparable<Game> {
     for (Color color : availablePieceIds.keySet()) {
       newPieces.put(color, new TreeSet<>(availablePieceIds.get(color)));
     }
-    return new Game(newPieces, playLog.copy(), numPlayers, currentPlayer, board.copy(), pieceLibrary);
+    return new Game(newPieces, playLog.copy(), numPlayers, currentPlayer, board.copy(),
+        pieceLibrary, numberConsecutivePlayerSkips);
   }
 
-  public void iterateAvailableMoves(MoveCallback callback) {
+  public boolean hasAvailableMoves() {
     for (int pieceId : availablePieceIds.get(currentPlayer)) {
       for (Piece piece : pieceLibrary.getPiecePermutations(pieceId)) {
         for (YX boardReceptor : getBoard().getReceptors(currentPlayer)) {
           for (YX pieceCell : piece.getCells()) {
             if (getBoard().canPlay(currentPlayer, piece, boardReceptor, pieceCell)) {
-              callback.invoke(piece, boardReceptor, pieceCell);
+              return true;
+            }
+          }
+        }
+      }
+    }
+    return false;
+  }
+
+  static class UniquePieceIdAndOrigin {
+    private final int uniquePieceId;
+    private final YX origin;
+
+    public UniquePieceIdAndOrigin(int uniquePieceId, YX origin) {
+      this.uniquePieceId = uniquePieceId;
+      this.origin = origin;
+    }
+
+    @Override
+    public int hashCode() {
+      return Objects.hash(uniquePieceId, origin);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+      if (!(o instanceof UniquePieceIdAndOrigin)) {
+        return false;
+      }
+      UniquePieceIdAndOrigin that = (UniquePieceIdAndOrigin) o;
+      return this.uniquePieceId == that.uniquePieceId
+          && this.origin.equals(that.origin);
+    }
+  }
+
+  public void iterateAvailableMoves(MoveCallback callback) {
+    Set<UniquePieceIdAndOrigin> unique = new HashSet<>();
+    for (int pieceId : availablePieceIds.get(currentPlayer)) {
+      for (Piece piece : pieceLibrary.getPiecePermutations(pieceId)) {
+        for (YX boardReceptor : getBoard().getReceptors(currentPlayer)) {
+          for (YX pieceCell : piece.getCells()) {
+            YX origin = boardReceptor.minus(pieceCell);
+            UniquePieceIdAndOrigin upiao = new UniquePieceIdAndOrigin(
+                piece.getUniquePieceId(), origin);
+            if (unique.contains(upiao)) {
+              continue;
+            }
+
+            callback.attempt();
+
+            if (getBoard().canPlay(currentPlayer, piece, boardReceptor, pieceCell)) {
+              unique.add(upiao);
+              callback.candidate(piece, boardReceptor, pieceCell);
             }
           }
         }
@@ -112,7 +183,8 @@ public class Game implements Comparable<Game> {
   }
 
   public interface MoveCallback {
-    public void invoke(Piece piece, YX boardReceptor, YX pieceCell);
+    public void attempt();
+    public void candidate(Piece piece, YX boardReceptor, YX pieceCell);
   }
 
   @Override

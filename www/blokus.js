@@ -38,7 +38,7 @@ function handleResponse(response) {
   //      '], ' +
   //      '"message": "This is a message."}';
   //const response = JSON.parse(json)
-  //console.log(response)
+  console.log(response)
   gameId = response.gameId
   for (let color in response.scores) {
     scoreElements.get(color).text(response.scores[color]);

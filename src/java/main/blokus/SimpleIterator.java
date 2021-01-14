@@ -113,28 +113,34 @@ public class SimpleIterator {
     logger.info("Total games: " + total);
   }
 
-  private IterationResult iterateGame(Game game) {
-    Set<Game> gamesWithNPieces = new LinkedHashSet<>();
-
-    Color color = Color.BLUE;
-    int attempts = 0;
-    SortedSet<Integer> pieces = game.getAvailablePieces();
-    for (int pieceId : pieces) {
-      for (Piece piece : library.getPiecePermutations(pieceId)) {
-        // For every available rotation of every piece, try to make a new game.
-        for (YX boardReceptor : game.getBoard().getReceptors(color)) {
-          for (YX pieceCell : piece.getCells()) {
-            attempts++;
-            if (game.getBoard().canPlay(color, piece, boardReceptor, pieceCell)) {
-              Game gameCopy = game.copy();
-              gameCopy.playPiece(color, piece, boardReceptor, pieceCell);
-              gamesWithNPieces.add(gameCopy);
-            }
-          }
-        }
-      }
+  static class CollectingMoveCallback implements Game.MoveCallback {
+    public CollectingMoveCallback(Game game, Color color) {
+      this.game = game;
+      this.color = color;
     }
-    return new IterationResult(gamesWithNPieces, attempts);
+
+    public final Game game;
+    public final Color color;
+    public int attempts = 0;
+    public final Set<Game> gamesWithNPieces = new LinkedHashSet<>();
+
+    @Override
+    public void attempt() {
+      attempts++;
+    }
+
+    @Override
+    public void candidate(Piece piece, YX boardReceptor, YX pieceCell) {
+      Game gameCopy = game.copy();
+      gameCopy.playPiece(color, piece, boardReceptor, pieceCell);
+      gamesWithNPieces.add(gameCopy);
+    }
+  };
+
+  private IterationResult iterateGame(Game game) {
+    CollectingMoveCallback callback = new CollectingMoveCallback(game, Color.BLUE);
+    game.iterateAvailableMoves(callback);
+    return new IterationResult(callback.gamesWithNPieces, callback.attempts);
   }
 
   public static class IterationResult {

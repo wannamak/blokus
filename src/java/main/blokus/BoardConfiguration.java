@@ -15,9 +15,9 @@ public class BoardConfiguration {
 
   private static final Map<Color, YX> INITIAL_RECEPTORS = ImmutableMap.of(
       Color.BLUE, new YX(0, 0),
-      Color.YELLOW, new YX(0, 39),
-      Color.RED, new YX(39, 39),
-      Color.GREEN, new YX(39, 0));
+      Color.YELLOW, new YX(0, 19),
+      Color.RED, new YX(19, 19),
+      Color.GREEN, new YX(19, 0));
 
   public Map<Color, YX> getInitialReceptors() {
     return INITIAL_RECEPTORS;

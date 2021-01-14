@@ -94,13 +94,12 @@ public class Board implements Comparable<Board> {
   }
 
   public void playPiece(Color color, Piece piece, YX boardReceptor, YX pieceCell) {
-    int originX = boardReceptor.x - pieceCell.x;
-    int originY = boardReceptor.y - pieceCell.y;
+    YX origin = boardReceptor.minus(pieceCell);
     Square[][] squares = piece.getSquares();
     for (int yy = 0; yy < squares.length; yy++) {
       for (int xx = 0; xx < squares[0].length; xx++) {
-        int y = originY + yy;
-        int x = originX + xx;
+        int y = origin.y + yy;
+        int x = origin.x + xx;
         YX yx = new YX(y, x);
         switch (squares[yy][xx]) {
           case CELL -> {
@@ -140,13 +139,12 @@ public class Board implements Comparable<Board> {
   public boolean canPlay(Color color, Piece piece, YX boardReceptor, YX pieceCell) {
     Set<YX> matedBoardReceptors = new HashSet<>();
     Set<YX> matedPieceReceptors = new HashSet<>();
-    int originX = boardReceptor.x - pieceCell.x;
-    int originY = boardReceptor.y - pieceCell.y;
+    YX origin = boardReceptor.minus(pieceCell);
     Square[][] squares = piece.getSquares();
     for (int yy = 0; yy < squares.length; yy++) {
       for (int xx = 0; xx < squares[0].length; xx++) {
-        int y = originY + yy;
-        int x = originX + xx;
+        int y = origin.y + yy;
+        int x = origin.x + xx;
         YX yx = new YX(y, x);
         switch (squares[yy][xx]) {
           case CELL -> {
