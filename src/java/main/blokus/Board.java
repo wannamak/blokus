@@ -117,6 +117,7 @@ public class Board implements Comparable<Board> {
                 && x >= 0 && x < board[0].length) {
               if (board[y][x] == color.getCellRepresentation()) {
                 receptors.get(color).remove(yx);
+                // TODO: isn't this wrong?  As long as the square is not adjacent it should be a receptor?
               } else if (board[y][x] == 0) {
                 receptors.get(color).add(yx);
               }
@@ -127,6 +128,8 @@ public class Board implements Comparable<Board> {
                 && x >= 0 && x < board[0].length
                 && !isACellOfAnyColor(yx)) {
               board[y][x] |= color.getAdjacentBitmap();
+              // TODO: test this fixes receptor bug.
+              receptors.get(color).remove(yx);
             }
           }
           case EMPTY -> {
@@ -253,12 +256,14 @@ public class Board implements Comparable<Board> {
     return Arrays.deepEquals(this.getBoardMirror(), that.board);
   }
 
+  private static final int PRETTY_PADDING = 2;
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
 
-    int localMaxY = Math.min(board.length, maxY + 2);
-    int localMaxX = Math.min(board[0].length, maxX + 2);
+    int localMaxY = Math.min(board.length - 1, maxY + PRETTY_PADDING);
+    int localMaxX = Math.min(board[0].length - 1, maxX + PRETTY_PADDING);
     for (int y = 0; y < localMaxY; y++) {
       for (int x = 0; x < localMaxX; x++) {
         if (Color.REPRESENTATION_TO_COLOR.containsKey(board[y][x])) {

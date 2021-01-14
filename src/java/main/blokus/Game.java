@@ -39,7 +39,6 @@ public class Game implements Comparable<Game> {
     this.currentPlayer = Color.values()[0];
     this.board = new Board();
     this.playLog = new PlayLog();
-    this.currentPlayer = Color.BLUE;
     this.numberConsecutivePlayerSkips = 0;
   }
 
@@ -73,7 +72,7 @@ public class Game implements Comparable<Game> {
     playLog.log(color, piece, boardReceptor, pieceCell);
   }
 
-  public void removePiece(Color color, int pieceId) {
+  private void removePiece(Color color, int pieceId) {
     // TODO currentPlayer vs color
     Preconditions.checkState(availablePieceIds.get(color).remove(pieceId));
   }
@@ -91,6 +90,7 @@ public class Game implements Comparable<Game> {
   }
 
   /** Returns false if the game is over. */
+  // TODO return a set of skipped players?
   public boolean nextPlayer() {
     while (numberConsecutivePlayerSkips < numPlayers) {
       currentPlayer = getNextPlayer();
@@ -132,6 +132,10 @@ public class Game implements Comparable<Game> {
     return false;
   }
 
+  /**
+   * Used to deduplicate in the case where multiple receptors are utilized by
+   * the same new piece.  eg T and C.
+   */
   static class UniquePieceIdAndOrigin {
     private final int uniquePieceId;
     private final YX origin;

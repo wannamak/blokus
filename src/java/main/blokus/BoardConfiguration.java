@@ -6,11 +6,11 @@ import java.util.Map;
 
 public class BoardConfiguration {
   public int getWidth() {
-    return 40;
+    return 20;
   }
 
   public int getHeight() {
-    return 40;
+    return 20;
   }
 
   private static final Map<Color, YX> INITIAL_RECEPTORS = ImmutableMap.of(
