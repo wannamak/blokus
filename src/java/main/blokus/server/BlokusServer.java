@@ -107,13 +107,7 @@ public class BlokusServer {
     Color currentPlayer = game.getCurrentPlayer();
 
     JsonArrayBuilder moveList = Json.createArrayBuilder();
-    game.iterateAvailableMoves(new Game.MoveCallback() {
-      @Override
-      public void attempt() {
-      }
-
-      @Override
-      public void candidate(Piece piece, YX boardReceptor, YX pieceCell) {
+    game.iterateAvailableMoves((piece, boardReceptor, pieceCell) -> {
         JsonArrayBuilder cellList = Json.createArrayBuilder();
         getCells(piece, boardReceptor, pieceCell).forEach(cellList::add);
         moveList.add(Json.createObjectBuilder()
@@ -122,7 +116,6 @@ public class BlokusServer {
             .add("boardReceptor", boardReceptor.toJson())
             .add("pieceCell", pieceCell.toJson())
             .add("cells", cellList));
-      }
     });
     Set<YX> receptors = game.getBoard().getReceptors(game.getCurrentPlayer());
     JsonArrayBuilder receptorList = Json.createArrayBuilder();

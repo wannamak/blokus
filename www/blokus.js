@@ -1,5 +1,6 @@
 const colors = ['blue', 'yellow', 'red', 'green']
 const numPieces = 21
+const maxNumCells = 400
 const scoreElements = new Map()
 const cellElements = []
 let moveListElement;
@@ -113,7 +114,6 @@ function drawReceptors(receptors, color) {
 
 function drawCells(colorMap) {
   for (let color in colorMap) {
-    console.log(colorMap[color])
     colorMap[color].forEach(id => cellElements[id].addClass("cell-" + color))
   }
 }
@@ -124,7 +124,7 @@ function drawHilights(hilights) {
 }
 
 function removeAllReceptors() {
-  for (let i = 0; i < 399; i++) {
+  for (let i = 0; i < maxNumCells; i++) {
     cellElements[i].removeClass(function (index, className) {
       return (className.match(/(^|\s)receptor-\S+/g) || []).join(' ');
     });
@@ -132,7 +132,7 @@ function removeAllReceptors() {
 }
 
 function removeAllMoveCandidates() {
-  for (let i = 0; i < 399; i++) {
+  for (let i = 0; i < maxNumCells; i++) {
     cellElements[i].removeClass(function (index, className) {
       return (className.match(/(^|\s)move-candidate-\S+/g) || []).join(' ');
     });
@@ -140,7 +140,7 @@ function removeAllMoveCandidates() {
 }
 
 function removeAllHilights() {
-  for (let i = 0; i < 399; i++) {
+  for (let i = 0; i < maxNumCells; i++) {
     cellElements[i].removeClass("hilight")
   }
 }

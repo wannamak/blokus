@@ -47,10 +47,10 @@ public class SimpleIterator {
       int count = 0;
       nextGames = new LinkedHashSet<>();
       for (Game game : games) {
-        IterationResult result = iterateGame(game);
+        Set<Game> result = iterateGame(game);
         logger.info("--] game " + count++ + " [-----------"
-            + result.attempts + " attempts yielded " + result.newGames.size() + " games");
-        nextGames.addAll(result.newGames);
+            + " yielded " + result.size() + " games");
+        nextGames.addAll(result);
       }
       games = nextGames;
     }
@@ -113,42 +113,14 @@ public class SimpleIterator {
     logger.info("Total games: " + total);
   }
 
-  static class CollectingMoveCallback implements Game.MoveCallback {
-    public CollectingMoveCallback(Game game, Color color) {
-      this.game = game;
-      this.color = color;
-    }
-
-    public final Game game;
-    public final Color color;
-    public int attempts = 0;
-    public final Set<Game> gamesWithNPieces = new LinkedHashSet<>();
-
-    @Override
-    public void attempt() {
-      attempts++;
-    }
-
-    @Override
-    public void candidate(Piece piece, YX boardReceptor, YX pieceCell) {
+  private Set<Game> iterateGame(Game game) {
+    Color color = Color.BLUE;
+    Set<Game> gamesWithNPieces = new LinkedHashSet<>();
+    game.iterateAvailableMoves((piece, boardReceptor, pieceCell) -> {
       Game gameCopy = game.copy();
       gameCopy.playPiece(color, piece, boardReceptor, pieceCell);
       gamesWithNPieces.add(gameCopy);
-    }
-  };
-
-  private IterationResult iterateGame(Game game) {
-    CollectingMoveCallback callback = new CollectingMoveCallback(game, Color.BLUE);
-    game.iterateAvailableMoves(callback);
-    return new IterationResult(callback.gamesWithNPieces, callback.attempts);
-  }
-
-  public static class IterationResult {
-    public IterationResult(Set<Game> newGames, int attempts) {
-      this.newGames = newGames;
-      this.attempts = attempts;
-    }
-    Set<Game> newGames;
-    int attempts;
+    });
+    return gamesWithNPieces;
   }
 }

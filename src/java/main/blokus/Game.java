@@ -174,11 +174,9 @@ public class Game implements Comparable<Game> {
               continue;
             }
 
-            callback.attempt();
-
             if (getBoard().canPlay(currentPlayer, piece, boardReceptor, pieceCell)) {
               unique.add(upiao);
-              callback.candidate(piece, boardReceptor, pieceCell);
+              callback.invoke(piece, boardReceptor, pieceCell);
             }
           }
         }
@@ -187,8 +185,7 @@ public class Game implements Comparable<Game> {
   }
 
   public interface MoveCallback {
-    public void attempt();
-    public void candidate(Piece piece, YX boardReceptor, YX pieceCell);
+    public void invoke(Piece piece, YX boardReceptor, YX pieceCell);
   }
 
   @Override

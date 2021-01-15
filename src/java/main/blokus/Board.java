@@ -108,7 +108,7 @@ public class Board implements Comparable<Board> {
             Preconditions.checkState(!isACellOfAnyColor(yx),
                 "Expected " + yx + " to be blank\n" + toString());
             board[y][x] = color.getCellRepresentation();
-            receptors.get(color).remove(yx);
+            Arrays.stream(Color.values()).forEach(c -> receptors.get(c).remove(yx));
             maxX = Math.max(maxX, x);
             maxY = Math.max(maxY, y);
           }
@@ -128,7 +128,6 @@ public class Board implements Comparable<Board> {
                 && x >= 0 && x < board[0].length
                 && !isACellOfAnyColor(yx)) {
               board[y][x] |= color.getAdjacentBitmap();
-              // TODO: test this fixes receptor bug.
               receptors.get(color).remove(yx);
             }
           }
