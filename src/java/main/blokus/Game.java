@@ -42,6 +42,10 @@ public class Game implements Comparable<Game> {
     this.numberConsecutivePlayerSkips = 0;
   }
 
+  public PieceLibrary getPieceLibrary() {
+    return pieceLibrary;
+  }
+
   public int getNumPlayers() {
     return numPlayers;
   }
@@ -77,8 +81,8 @@ public class Game implements Comparable<Game> {
     Preconditions.checkState(availablePieceIds.get(color).remove(pieceId));
   }
 
-  public SortedSet<Integer> getAvailablePieces() {
-    return availablePieceIds.get(currentPlayer);
+  public SortedSet<Integer> getAvailablePieceIds(Color color) {
+    return availablePieceIds.get(color);
   }
 
   public PlayLog getPlayLog() {

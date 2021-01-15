@@ -128,8 +128,10 @@ public class PieceLibrary {
   private int uniquePieceId = 0;
   private final Map<Integer, Set<Piece>> piecesByPieceId;
   private final Map<Integer, Piece> piecesByUniqueId;
+  private final Map<Integer, Integer> cellsByPieceId;
 
   public PieceLibrary() {
+    this.cellsByPieceId = new HashMap<>();
     this.piecesByPieceId = generate();
     this.piecesByUniqueId = new HashMap<>();
     for (int pieceId : piecesByPieceId.keySet()) {
@@ -157,6 +159,10 @@ public class PieceLibrary {
 
   public Piece getPieceByUniqueId(int uniquePieceId) {
     return piecesByUniqueId.get(uniquePieceId);
+  }
+
+  public int getNumCells(int pieceId) {
+    return cellsByPieceId.get(pieceId);
   }
 
   private Set<Piece> getPermutations(int pieceId) {
@@ -197,6 +203,7 @@ public class PieceLibrary {
       Arrays.flipVertically(pieceDefinition);
       addRotations(permutations, pieceId, true, pieceDefinition);
       pieces.put(pieceId, permutations);
+      cellsByPieceId.put(pieceId, countCells(pieceDefinition));
     }
     return pieces;
   }
@@ -217,5 +224,17 @@ public class PieceLibrary {
     } else {
       Preconditions.checkState(set.size() == size);
     }
+  }
+
+  private int countCells(Square[][] definition) {
+    int numCells = 0;
+    for (int y = 0; y < definition.length; y++) {
+      for (int x = 0; x < definition[0].length; x++) {
+        if (definition[y][x] == CELL) {
+          numCells++;
+        }
+      }
+    }
+    return numCells;
   }
 }

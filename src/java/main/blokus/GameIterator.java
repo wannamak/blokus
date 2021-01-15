@@ -1,8 +1,6 @@
 package blokus;
 
 import blokus.codec.GameCodec;
-import com.google.protobuf.ByteString;
-import util.VarKey;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -12,13 +10,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import java.util.SortedSet;
 import java.util.logging.Logger;
 
@@ -82,7 +73,7 @@ public class GameIterator {
   private void iterateGame(Game game, GameCallback callback) throws IOException {
     int attempts = 0;
     Color color = Color.BLUE;
-    SortedSet<Integer> pieces = game.getAvailablePieces();
+    SortedSet<Integer> pieces = game.getAvailablePieceIds(color);
     for (int pieceId : pieces) {
       for (Piece piece : pieceLibrary.getPiecePermutations(pieceId)) {
         // For every available rotation of every piece, try to make a new game.

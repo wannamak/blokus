@@ -4,6 +4,7 @@ import blokus.Color;
 import blokus.Game;
 import blokus.Piece;
 import blokus.PieceLibrary;
+import blokus.Scorer;
 import blokus.Square;
 import blokus.YX;
 import com.google.common.base.Preconditions;
@@ -130,13 +131,14 @@ public class BlokusServer {
 
     JsonArrayBuilder hilightList = Json.createArrayBuilder();
 
+    Scorer scorer = new Scorer(game);
     JsonObjectBuilder response = Json.createObjectBuilder()
         .add("gameId", gameId)
         .add("scores", Json.createObjectBuilder()
-            .add("blue", 1)
-            .add("yellow", 2)
-            .add("green", 3)
-            .add("red", 4))
+            .add("blue", scorer.score(Color.BLUE))
+            .add("yellow", scorer.score(Color.YELLOW))
+            .add("green", scorer.score(Color.GREEN))
+            .add("red", scorer.score(Color.RED)))
         .add("receptors", receptorList)
         .add("currentPlayerColor", currentPlayer.name().toLowerCase())
         .add("moves", moveList)
