@@ -117,8 +117,7 @@ public class Board implements Comparable<Board> {
                 && x >= 0 && x < board[0].length) {
               if (board[y][x] == color.getCellRepresentation()) {
                 receptors.get(color).remove(yx);
-                // TODO: isn't this wrong?  As long as the square is not adjacent it should be a receptor?
-              } else if (board[y][x] == 0) {
+              } else if (!isAdjacentToColor(yx, color)) {
                 receptors.get(color).add(yx);
               }
             }

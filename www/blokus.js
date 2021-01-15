@@ -44,6 +44,7 @@ function handleResponse(response) {
   for (let color in response.scores) {
     scoreElements.get(color).text(response.scores[color]);
   }
+  removeAllMoveCandidates();
   updateCurrentPlayer(response.currentPlayerColor);
   drawReceptors(response.receptors, response.currentPlayerColor);
   buildMoveList(response.moves, response.currentPlayerColor);
