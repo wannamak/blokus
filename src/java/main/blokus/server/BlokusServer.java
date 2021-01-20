@@ -67,8 +67,6 @@ public class BlokusServer {
     @Override
     public void handle(String target, Request jettyRequest, HttpServletRequest request,
         HttpServletResponse response) throws IOException {
-      logger.info("Target=" + target + ", request=" + jettyRequest);
-
       jettyRequest.setHandled(true);
       response.setContentType("application/json");
       response.setStatus(HttpServletResponse.SC_OK);
